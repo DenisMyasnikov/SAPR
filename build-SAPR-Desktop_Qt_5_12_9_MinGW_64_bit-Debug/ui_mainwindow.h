@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
@@ -44,25 +45,35 @@ public:
     QPushButton *btnChangeNumberOfRods;
     QPushButton *btnAcceptNumberOfRods;
     QVBoxLayout *verticalLayout_2;
-    QFormLayout *formLayout;
-    QLabel *label_5;
-    QLineEdit *lineEdit;
-    QLabel *label_6;
-    QLineEdit *lineEdit_2;
+    QHBoxLayout *horizontalLayout_4;
+    QVBoxLayout *verticalLayout_7;
     QLabel *label_2;
     QFrame *line;
+    QLabel *label_5;
+    QLabel *label_6;
+    QVBoxLayout *verticalLayout_5;
     QSpinBox *sbPropOfRod;
+    QFrame *line_2;
+    QLineEdit *leLenngth;
+    QLineEdit *leArea;
+    QVBoxLayout *verticalLayout_4;
+    QLabel *label_4;
+    QFrame *line_3;
+    QComboBox *cbUnitLength;
+    QComboBox *cbUnitArea;
     QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QMenu *menu;
+    QMenu *menu_2;
+    QMenu *menu_3;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(867, 607);
-        MainWindow->setMinimumSize(QSize(800, 600));
+        MainWindow->resize(1280, 960);
+        MainWindow->setMinimumSize(QSize(1280, 960));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -152,71 +163,142 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setSizeConstraint(QLayout::SetMinimumSize);
-        formLayout = new QFormLayout();
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        label_5 = new QLabel(centralwidget);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setFont(font);
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, label_5);
-
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setFont(font);
-        lineEdit->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, lineEdit);
-
-        label_6 = new QLabel(centralwidget);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setFont(font);
-
-        formLayout->setWidget(3, QFormLayout::LabelRole, label_6);
-
-        lineEdit_2 = new QLineEdit(centralwidget);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
-        lineEdit_2->setSizePolicy(sizePolicy5);
-        lineEdit_2->setFont(font);
-
-        formLayout->setWidget(3, QFormLayout::FieldRole, lineEdit_2);
-
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
+        QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy5);
         label_2->setFont(font);
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, label_2);
+        verticalLayout_7->addWidget(label_2);
 
         line = new QFrame(centralwidget);
         line->setObjectName(QString::fromUtf8("line"));
-        QSizePolicy sizePolicy6(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(line->sizePolicy().hasHeightForWidth());
-        line->setSizePolicy(sizePolicy6);
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, line);
+        verticalLayout_7->addWidget(line);
 
+        label_5 = new QLabel(centralwidget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        sizePolicy5.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy5);
+        label_5->setFont(font);
+
+        verticalLayout_7->addWidget(label_5);
+
+        label_6 = new QLabel(centralwidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        sizePolicy5.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy5);
+        label_6->setFont(font);
+
+        verticalLayout_7->addWidget(label_6);
+
+
+        horizontalLayout_4->addLayout(verticalLayout_7);
+
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         sbPropOfRod = new QSpinBox(centralwidget);
         sbPropOfRod->setObjectName(QString::fromUtf8("sbPropOfRod"));
-        QSizePolicy sizePolicy7(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(sbPropOfRod->sizePolicy().hasHeightForWidth());
-        sbPropOfRod->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy6(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(sbPropOfRod->sizePolicy().hasHeightForWidth());
+        sbPropOfRod->setSizePolicy(sizePolicy6);
         sbPropOfRod->setFont(font);
         sbPropOfRod->setMinimum(1);
         sbPropOfRod->setMaximum(1000);
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, sbPropOfRod);
+        verticalLayout_5->addWidget(sbPropOfRod);
+
+        line_2 = new QFrame(centralwidget);
+        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_5->addWidget(line_2);
+
+        leLenngth = new QLineEdit(centralwidget);
+        leLenngth->setObjectName(QString::fromUtf8("leLenngth"));
+        sizePolicy6.setHeightForWidth(leLenngth->sizePolicy().hasHeightForWidth());
+        leLenngth->setSizePolicy(sizePolicy6);
+        leLenngth->setFont(font);
+        leLenngth->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout_5->addWidget(leLenngth);
+
+        leArea = new QLineEdit(centralwidget);
+        leArea->setObjectName(QString::fromUtf8("leArea"));
+        sizePolicy6.setHeightForWidth(leArea->sizePolicy().hasHeightForWidth());
+        leArea->setSizePolicy(sizePolicy6);
+        leArea->setFont(font);
+
+        verticalLayout_5->addWidget(leArea);
 
 
-        verticalLayout_2->addLayout(formLayout);
+        horizontalLayout_4->addLayout(verticalLayout_5);
+
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        label_4 = new QLabel(centralwidget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        QSizePolicy sizePolicy7(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy7);
+        label_4->setFont(font);
+
+        verticalLayout_4->addWidget(label_4);
+
+        line_3 = new QFrame(centralwidget);
+        line_3->setObjectName(QString::fromUtf8("line_3"));
+        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_4->addWidget(line_3);
+
+        cbUnitLength = new QComboBox(centralwidget);
+        cbUnitLength->addItem(QString());
+        cbUnitLength->addItem(QString());
+        cbUnitLength->addItem(QString());
+        cbUnitLength->addItem(QString());
+        cbUnitLength->setObjectName(QString::fromUtf8("cbUnitLength"));
+        sizePolicy1.setHeightForWidth(cbUnitLength->sizePolicy().hasHeightForWidth());
+        cbUnitLength->setSizePolicy(sizePolicy1);
+        cbUnitLength->setFont(font);
+
+        verticalLayout_4->addWidget(cbUnitLength);
+
+        cbUnitArea = new QComboBox(centralwidget);
+        cbUnitArea->addItem(QString());
+        cbUnitArea->addItem(QString());
+        cbUnitArea->addItem(QString());
+        cbUnitArea->addItem(QString());
+        cbUnitArea->setObjectName(QString::fromUtf8("cbUnitArea"));
+        sizePolicy1.setHeightForWidth(cbUnitArea->sizePolicy().hasHeightForWidth());
+        cbUnitArea->setSizePolicy(sizePolicy1);
+        cbUnitArea->setFont(font);
+        cbUnitArea->setEditable(false);
+        cbUnitArea->setInsertPolicy(QComboBox::NoInsert);
+        cbUnitArea->setIconSize(QSize(16, 16));
+        cbUnitArea->setDuplicatesEnabled(true);
+
+        verticalLayout_4->addWidget(cbUnitArea);
+
+
+        horizontalLayout_4->addLayout(verticalLayout_4);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_4);
 
 
         horizontalLayout_2->addLayout(verticalLayout_2);
@@ -229,23 +311,35 @@ public:
 
         graphicsView = new QGraphicsView(centralwidget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        sizePolicy.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy);
 
         verticalLayout_3->addWidget(graphicsView);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 867, 20));
+        menubar->setGeometry(QRect(0, 0, 1280, 20));
         menu = new QMenu(menubar);
         menu->setObjectName(QString::fromUtf8("menu"));
+        menu_2 = new QMenu(menubar);
+        menu_2->setObjectName(QString::fromUtf8("menu_2"));
+        menu_3 = new QMenu(menubar);
+        menu_3->setObjectName(QString::fromUtf8("menu_3"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menu->menuAction());
+        menubar->addAction(menu_2->menuAction());
+        menubar->addAction(menu_3->menuAction());
 
         retranslateUi(MainWindow);
+
+        cbUnitLength->setCurrentIndex(2);
+        cbUnitArea->setCurrentIndex(2);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -257,10 +351,23 @@ public:
         label->setText(QApplication::translate("MainWindow", "\320\232\320\276\320\273\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271:", nullptr));
         btnChangeNumberOfRods->setText(QApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214 \320\272\320\276\320\273\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));
         btnAcceptNumberOfRods->setText(QApplication::translate("MainWindow", "OK", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "\320\245\320\260\321\200\320\260\320\272\321\202\320\265\321\200\320\270\321\201\321\202\320\270\320\272\320\260 \321\201\321\202\320\265\321\200\320\266\320\275\321\217 -", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "\320\224\320\273\320\270\320\275\320\260", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "\320\237\320\273\320\276\321\211\320\260\320\264\321\214 \320\277\320\276\320\277\320\265\321\200\320\265\321\207\320\275\320\276\320\263\320\276 \321\201\320\265\321\207\320\265\320\275\320\270\321\217", nullptr));
-        label_2->setText(QApplication::translate("MainWindow", "\320\245\320\260\321\200\320\260\320\272\321\202\320\265\321\200\320\270\321\201\321\202\320\270\320\272\320\260 \321\201\321\202\320\265\321\200\320\266\320\275\321\217 -", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "\320\225\320\264\320\270\320\275\320\270\321\206\321\213 \320\270\320\267\320\274\320\265\321\200\320\265\320\275\320\270\321\217", nullptr));
+        cbUnitLength->setItemText(0, QApplication::translate("MainWindow", "\320\274\320\272\320\274", nullptr));
+        cbUnitLength->setItemText(1, QApplication::translate("MainWindow", "\320\274\320\274", nullptr));
+        cbUnitLength->setItemText(2, QApplication::translate("MainWindow", "\321\201\320\274", nullptr));
+        cbUnitLength->setItemText(3, QApplication::translate("MainWindow", "\320\272\320\274", nullptr));
+
+        cbUnitArea->setItemText(0, QApplication::translate("MainWindow", "\320\274\320\272\320\274 (\320\272\320\262)", nullptr));
+        cbUnitArea->setItemText(1, QApplication::translate("MainWindow", "\320\274\320\274 (\320\272\320\262)", nullptr));
+        cbUnitArea->setItemText(2, QApplication::translate("MainWindow", "\321\201\320\274 (\320\272\320\262)", nullptr));
+        cbUnitArea->setItemText(3, QApplication::translate("MainWindow", "\320\272\320\274 (\320\272\320\262)", nullptr));
+
         menu->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\265\320\277\321\200\320\276\321\206\320\272\321\201\321\201\320\276\321\200", nullptr));
+        menu_2->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
+        menu_3->setTitle(QApplication::translate("MainWindow", "\320\237\320\276\321\201\321\202\320\277\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
     } // retranslateUi
 
 };

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
 
 //MyInclude
 #include "rod.h"
@@ -29,9 +30,12 @@ private slots:
 
 
 
+    void on_leLenngth_editingFinished();
 
+    QList <Rod>::iterator getRodFromList(int i);
+    void on_sbPropOfRod_valueChanged(int arg1);
 
-    void on_sBPropOfRod_textChanged(const QString &arg1);
+    void on_leArea_editingFinished();
 
 private:
     Ui::MainWindow *ui;
