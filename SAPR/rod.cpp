@@ -15,6 +15,16 @@ void Rod::setArea(double a)
     area = a;
 }
 
+void Rod::setModuleE(double e)
+{
+    moduleE = e;
+}
+
+void Rod::setModuleSigma(double s)
+{
+    moduleSigma  = s;
+}
+
 int Rod::getId()
 {
     return id;

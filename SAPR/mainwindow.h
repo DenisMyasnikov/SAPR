@@ -34,8 +34,13 @@ private slots:
 
     QList <Rod>::iterator getRodFromList(int i);
     void on_sbPropOfRod_valueChanged(int arg1);
-
     void on_leArea_editingFinished();
+
+    void changeEnableRodProp(bool en);
+
+    void on_leModuleE_editingFinished();
+
+    void on_leModuleSigma_editingFinished();
 
 private:
     Ui::MainWindow *ui;

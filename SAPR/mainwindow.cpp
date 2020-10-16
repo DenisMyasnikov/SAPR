@@ -7,11 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
    ui->setupUi(this);
    ui->sbNumberOfrods->setRange(1,1000);
-   ui->sbPropOfRod->setEnabled(false);
-   ui->leLenngth->setEnabled(false);
-   ui->leArea->setEnabled(false);
-   ui->cbUnitLength->setEnabled(false);
-   ui->cbUnitArea->setEnabled(false);
+   changeEnableRodProp(false);
+
 }
 
 MainWindow::~MainWindow()
@@ -20,58 +17,37 @@ MainWindow::~MainWindow()
 }
 
 
-//void MainWindow::on_spinBox_textChanged(const QString &arg1)
-//{
-
-//}
+// SLOTS
 
 void MainWindow::on_btnAcceptNumberOfRods_clicked()
 {
     ui->btnAcceptNumberOfRods->setEnabled(false);
     ui->sbNumberOfrods->setEnabled(false);
-    ui->sbPropOfRod->setEnabled(true);
+    changeEnableRodProp(true);
     ui->sbPropOfRod->setRange(1, ui->sbNumberOfrods->value());
-    ui->leLenngth->setEnabled(true);
-    ui->leArea->setEnabled(true);
-    ui->cbUnitLength->setEnabled(true);
-    ui->cbUnitArea->setEnabled(true);
 
     for (int k = 1; k <= ui->sbNumberOfrods->value(); k++)
         rods.push_back(Rod(k));
 
     on_sbPropOfRod_valueChanged(1);
+
+
 }
 
 void MainWindow::on_btnChangeNumberOfRods_clicked()
 {
     ui->btnAcceptNumberOfRods->setEnabled(true);
     ui->sbNumberOfrods->setEnabled(true);
-    ui->sbPropOfRod->setEnabled(false);
-    ui->leLenngth->setEnabled(false);
-    ui->leArea->setEnabled(false);
-    ui->cbUnitLength->setEnabled(false);
-    ui->cbUnitArea->setEnabled(false);
+    changeEnableRodProp(false);
 }
 
-//void MainWindow::on_addRods_clicked(int i)
-//{
-//    QDynamicEditLine *editLineArea = new QDynamicEditLine(this);
-//    QDynamicEditLine *editLineLength = new QDynamicEditLine(this);
-
-//    QLabel *labeLength = new QLabel(this);
-//    QLabel *labelArea = new QLabel(this);
-//    labeLength->setText("Введите длину стержня - "+ QString::number(i));
-//    labelArea->setText("Введите площадь поперечного сечения стержня - "+ QString::number(i));
-//    ui->verticalLayout_2->addWidget(labeLength);
-//    ui->verticalLayout_2->addWidget(editLineLength);
-//    ui->verticalLayout_2->addWidget(labelArea);
-//    ui->verticalLayout_2->addWidget(editLineArea);
-//}
 
 void MainWindow::on_sbPropOfRod_valueChanged(int arg1)
 {
     ui->leLenngth->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getLength()));
     ui->leArea->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getArea()));
+    ui->leModuleE->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getModuleE()));
+    ui->leModuleSigma->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getModuleSigma()));
 }
 
 void MainWindow::on_leLenngth_editingFinished()
@@ -85,6 +61,31 @@ void MainWindow::on_leArea_editingFinished()
     getRodFromList(ui->sbPropOfRod->value())->setArea(ui->leArea->text().split(" ")[0].toDouble());
 }
 
+void MainWindow::on_leModuleE_editingFinished()
+{
+    getRodFromList(ui->sbPropOfRod->value())->setModuleE(ui->leModuleE->text().split(" ")[0].toDouble());
+}
+
+void MainWindow::on_leModuleSigma_editingFinished()
+{
+
+}
+
+//MyFunc
+
+void MainWindow::changeEnableRodProp(bool en)
+{
+    ui->sbPropOfRod->setEnabled(en);
+    ui->leLenngth->setEnabled(en);
+    ui->leArea->setEnabled(en);
+    ui->cbUnitLength->setEnabled(en);
+    ui->cbUnitArea->setEnabled(en);
+    ui->leModuleE->setEnabled(en);
+    ui->leModuleSigma->setEnabled(en);
+    ui->cbModuleE->setEnabled(en);
+    ui->cbModuleSigma->setEnabled(en);
+}
+
 QList <Rod>::iterator MainWindow::getRodFromList(int i)
 {
     for(auto iter = rods.begin(); iter != rods.end(); iter++){
@@ -93,6 +94,7 @@ QList <Rod>::iterator MainWindow::getRodFromList(int i)
         }
     }
 }
+
 
 
 

@@ -13,6 +13,8 @@ public:
     Rod(int id);
     void setLength(double);
     void setArea(double);
+    void setModuleE(double);
+    void setModuleSigma(double);
     int getId();
     double getLength();
     double getArea();
