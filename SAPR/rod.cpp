@@ -50,6 +50,11 @@ double Rod::getModuleSigma()
     return moduleSigma;
 }
 
+double *Rod::getSizeValue()
+{
+
+}
+
 Rod::~Rod()
 {
 

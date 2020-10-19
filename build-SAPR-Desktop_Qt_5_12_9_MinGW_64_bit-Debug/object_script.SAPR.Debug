@@ -1,0 +1,10 @@
+debug/listrods.o
+debug/main.o
+debug/mainwindow.o
+debug/qdynamiceditline.o
+debug/rod.o
+debug/rodpainter.o
+debug/verifier.o
+debug/moc_mainwindow.o
+debug/moc_qdynamiceditline.o
+debug/moc_rodpainter.o

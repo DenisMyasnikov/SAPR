@@ -1,0 +1,14 @@
+#ifndef CONSTRUCTPAINTER_H
+#define CONSTRUCTPAINTER_H
+
+#include <QObject>
+
+
+class RodtPainter:
+{
+
+
+};
+
+
+#endif // CONSTRUCTPAINTER_H

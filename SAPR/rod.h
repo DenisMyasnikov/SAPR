@@ -6,7 +6,7 @@ class Rod
 {
     int id;
     double length=1;
-    double area=1;
+    double area=0.001;
     double moduleE = 2*pow(10,11);
     double moduleSigma = 160 * pow(10, 6);
 public:  
@@ -20,6 +20,7 @@ public:
     double getArea();
     double getModuleE();
     double getModuleSigma();
+    double *getSizeValue();
     ~Rod();
 };
 

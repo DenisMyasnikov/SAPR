@@ -1,0 +1,10 @@
+release/listrods.o
+release/main.o
+release/mainwindow.o
+release/qdynamiceditline.o
+release/rod.o
+release/rodpainter.o
+release/verifier.o
+release/moc_mainwindow.o
+release/moc_qdynamiceditline.o
+release/moc_rodpainter.o
