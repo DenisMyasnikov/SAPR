@@ -35,11 +35,8 @@ private slots:
 
     void on_leLenngth_editingFinished();
 
-    QList <Rod>::iterator getRodFromList(int i);
     void on_sbPropOfRod_valueChanged(int arg1);
     void on_leArea_editingFinished();
-
-    void changeEnableRodProp(bool en);
 
     void on_leModuleE_editingFinished();
 
@@ -53,12 +50,19 @@ private slots:
 
     void on_cbModuleSigma_currentIndexChanged(int index);
 
-    void setNormalValue(int index);
+
+    void on_btnAcceptPropOfRods_clicked();
 
 private:
     Ui::MainWindow *ui;
     QList <Rod> rods;
     QGraphicsScene *myGrScene;
+    int previousNumberOfRods=0;
+
+    double getValueFromNormalValue(int type);
+    void setSizeOfRod();
+    void changeEnableRodProp(bool en);
+    QList <Rod>::iterator getRodFromList(int i);
 
 };
 #endif // MAINWINDOW_H

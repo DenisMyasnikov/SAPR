@@ -66,6 +66,7 @@ public:
     QComboBox *cbUnitArea;
     QComboBox *cbModuleE;
     QComboBox *cbModuleSigma;
+    QPushButton *btnAcceptPropOfRods;
     QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QMenu *menu;
@@ -145,11 +146,8 @@ public:
 
         btnAcceptNumberOfRods = new QPushButton(centralwidget);
         btnAcceptNumberOfRods->setObjectName(QString::fromUtf8("btnAcceptNumberOfRods"));
-        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Minimum);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(btnAcceptNumberOfRods->sizePolicy().hasHeightForWidth());
-        btnAcceptNumberOfRods->setSizePolicy(sizePolicy4);
+        sizePolicy3.setHeightForWidth(btnAcceptNumberOfRods->sizePolicy().hasHeightForWidth());
+        btnAcceptNumberOfRods->setSizePolicy(sizePolicy3);
         btnAcceptNumberOfRods->setFont(font);
 
         flNumberOfRods->setWidget(1, QFormLayout::FieldRole, btnAcceptNumberOfRods);
@@ -166,11 +164,11 @@ public:
         verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Preferred);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
-        label_2->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy4);
         label_2->setFont(font);
 
         verticalLayout_7->addWidget(label_2);
@@ -184,16 +182,16 @@ public:
 
         label_5 = new QLabel(centralwidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        sizePolicy5.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
-        label_5->setSizePolicy(sizePolicy5);
+        sizePolicy4.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy4);
         label_5->setFont(font);
 
         verticalLayout_7->addWidget(label_5);
 
         label_6 = new QLabel(centralwidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        sizePolicy5.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy5);
+        sizePolicy4.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy4);
         label_6->setFont(font);
 
         verticalLayout_7->addWidget(label_6);
@@ -217,11 +215,11 @@ public:
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         sbPropOfRod = new QSpinBox(centralwidget);
         sbPropOfRod->setObjectName(QString::fromUtf8("sbPropOfRod"));
-        QSizePolicy sizePolicy6(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(sbPropOfRod->sizePolicy().hasHeightForWidth());
-        sbPropOfRod->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(sbPropOfRod->sizePolicy().hasHeightForWidth());
+        sbPropOfRod->setSizePolicy(sizePolicy5);
         sbPropOfRod->setFont(font);
         sbPropOfRod->setMinimum(1);
         sbPropOfRod->setMaximum(1000);
@@ -237,8 +235,8 @@ public:
 
         leLenngth = new QLineEdit(centralwidget);
         leLenngth->setObjectName(QString::fromUtf8("leLenngth"));
-        sizePolicy6.setHeightForWidth(leLenngth->sizePolicy().hasHeightForWidth());
-        leLenngth->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(leLenngth->sizePolicy().hasHeightForWidth());
+        leLenngth->setSizePolicy(sizePolicy5);
         leLenngth->setFont(font);
         leLenngth->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
@@ -246,24 +244,24 @@ public:
 
         leArea = new QLineEdit(centralwidget);
         leArea->setObjectName(QString::fromUtf8("leArea"));
-        sizePolicy6.setHeightForWidth(leArea->sizePolicy().hasHeightForWidth());
-        leArea->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(leArea->sizePolicy().hasHeightForWidth());
+        leArea->setSizePolicy(sizePolicy5);
         leArea->setFont(font);
 
         verticalLayout_5->addWidget(leArea);
 
         leModuleE = new QLineEdit(centralwidget);
         leModuleE->setObjectName(QString::fromUtf8("leModuleE"));
-        sizePolicy6.setHeightForWidth(leModuleE->sizePolicy().hasHeightForWidth());
-        leModuleE->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(leModuleE->sizePolicy().hasHeightForWidth());
+        leModuleE->setSizePolicy(sizePolicy5);
         leModuleE->setFont(font);
 
         verticalLayout_5->addWidget(leModuleE);
 
         leModuleSigma = new QLineEdit(centralwidget);
         leModuleSigma->setObjectName(QString::fromUtf8("leModuleSigma"));
-        sizePolicy6.setHeightForWidth(leModuleSigma->sizePolicy().hasHeightForWidth());
-        leModuleSigma->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(leModuleSigma->sizePolicy().hasHeightForWidth());
+        leModuleSigma->setSizePolicy(sizePolicy5);
         leModuleSigma->setFont(font);
 
         verticalLayout_5->addWidget(leModuleSigma);
@@ -275,11 +273,11 @@ public:
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        QSizePolicy sizePolicy7(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
-        label_4->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy6);
         label_4->setFont(font);
 
         verticalLayout_4->addWidget(label_4);
@@ -349,6 +347,13 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_4);
 
+        btnAcceptPropOfRods = new QPushButton(centralwidget);
+        btnAcceptPropOfRods->setObjectName(QString::fromUtf8("btnAcceptPropOfRods"));
+        btnAcceptPropOfRods->setFont(font);
+        btnAcceptPropOfRods->setLayoutDirection(Qt::LeftToRight);
+
+        verticalLayout_2->addWidget(btnAcceptPropOfRods);
+
 
         horizontalLayout_2->addLayout(verticalLayout_2);
 
@@ -387,7 +392,7 @@ public:
         retranslateUi(MainWindow);
 
         cbUnitLength->setCurrentIndex(3);
-        cbUnitArea->setCurrentIndex(3);
+        cbUnitArea->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -425,6 +430,7 @@ public:
         cbModuleSigma->setItemText(1, QApplication::translate("MainWindow", "\320\232\320\237\320\260", nullptr));
         cbModuleSigma->setItemText(2, QApplication::translate("MainWindow", "\320\234\320\237\320\220", nullptr));
 
+        btnAcceptPropOfRods->setText(QApplication::translate("MainWindow", "\320\237\321\200\320\270\320\275\321\217\321\202\321\214 \321\205\320\260\321\200\320\260\320\272\321\202\320\265\321\200\320\270\321\201\321\202\320\270\320\272\320\270 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));
         menu->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\265\320\277\321\200\320\276\321\206\320\272\321\201\321\201\320\276\321\200", nullptr));
         menu_2->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
         menu_3->setTitle(QApplication::translate("MainWindow", "\320\237\320\276\321\201\321\202\320\277\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));

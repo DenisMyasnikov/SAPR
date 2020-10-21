@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <QGraphicsItem>
 
 //MyInclude
 #include "rod.h"
@@ -12,7 +13,6 @@ class ConstructPainter
 {
 public:
     static void paintRod(QGraphicsScene *myGrScene,QList <Rod>);
-
 };
 
 

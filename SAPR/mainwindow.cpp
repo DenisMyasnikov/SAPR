@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     myGrScene = new QGraphicsScene(this);
     ui->graphicsView->setScene(myGrScene);
-
 }
 
 MainWindow::~MainWindow()
@@ -27,11 +26,18 @@ void MainWindow::on_btnAcceptNumberOfRods_clicked()
     ui->sbNumberOfrods->setEnabled(false);
     changeEnableRodProp(true);
     ui->sbPropOfRod->setRange(1, ui->sbNumberOfrods->value());
-
-    for (int k = 1; k <= ui->sbNumberOfrods->value(); k++)
-        rods.push_back(Rod(k));
-
+    if (previousNumberOfRods <= ui->sbNumberOfrods->value()){
+    for (int k = 1; k <= ui->sbNumberOfrods->value() - previousNumberOfRods; k++)
+        rods.push_back(Rod(rods.isEmpty()? 1: rods.last().getId()+1));
+    }else{
+        for (int k = 1; k <= abs(ui->sbNumberOfrods->value() - previousNumberOfRods); k++)
+            rods.removeLast();
+    }
     on_sbPropOfRod_valueChanged(1);
+    previousNumberOfRods = ui->sbNumberOfrods->value();
+
+    setSizeOfRod();
+    ConstructPainter::paintRod(myGrScene, rods);
 }
 
 void MainWindow::on_btnChangeNumberOfRods_clicked()
@@ -39,17 +45,16 @@ void MainWindow::on_btnChangeNumberOfRods_clicked()
     ui->btnAcceptNumberOfRods->setEnabled(true);
     ui->sbNumberOfrods->setEnabled(true);
     changeEnableRodProp(false);
-    ConstructPainter::paintRod(myGrScene, rods);
 }
+
 
 
 void MainWindow::on_sbPropOfRod_valueChanged(int arg1)
 {
-    ui->leLenngth->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getLength()));
-    ui->leArea->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getArea()));
-    ui->leModuleE->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getModuleE()));
-    ui->leModuleSigma->setText(QString::number(getRodFromList(ui->sbPropOfRod->value())->getModuleSigma()));
-
+    ui->leLenngth->setText(QString::number(getValueFromNormalValue(1)));
+    ui->leArea->setText(QString::number(getValueFromNormalValue(2)));
+    ui->leModuleE->setText(QString::number(getValueFromNormalValue(3)));
+    ui->leModuleSigma->setText(QString::number(getValueFromNormalValue(4)));
     ConstructPainter::paintRod(myGrScene, rods);
 }
 
@@ -76,6 +81,7 @@ void MainWindow::on_leLenngth_editingFinished()
     }
     getRodFromList(ui->sbPropOfRod->value())->setLength(normalValue);
     ui->statusbar->showMessage(QString::number(normalValue));
+    setSizeOfRod();
     ConstructPainter::paintRod(myGrScene, rods);
 }
 
@@ -103,6 +109,7 @@ void MainWindow::on_leArea_editingFinished()
     }
     getRodFromList(ui->sbPropOfRod->value())->setArea(normalValue);
     ui->statusbar->showMessage(QString::number(normalValue));
+    setSizeOfRod();
     ConstructPainter::paintRod(myGrScene, rods);
 }
 
@@ -115,10 +122,10 @@ void MainWindow::on_leModuleE_editingFinished()
         normalValue = value;
         break;
     case 1:
-        normalValue = value/1000;
+        normalValue = value*1000;
         break;
     case 2:
-        normalValue = value/1000000;
+        normalValue = value*1000000;
         break;
 
     }
@@ -135,10 +142,10 @@ void MainWindow::on_leModuleSigma_editingFinished()
         normalValue = value;
         break;
     case 1:
-        normalValue = value/1000;
+        normalValue = value*1000;
         break;
     case 2:
-        normalValue = value/1000000;
+        normalValue = value*1000000;
         break;
 
     }
@@ -149,96 +156,125 @@ void MainWindow::on_leModuleSigma_editingFinished()
 void MainWindow::on_cbUnitLength_currentIndexChanged(int index)
 {
     ui->statusbar->showMessage(QString::number(index));
-    double value;
-    double normalValue = getRodFromList(ui->sbPropOfRod->value())->getLength();
-    switch (ui->cbUnitLength->currentIndex()) {
-    case 0:
-        value = normalValue*1000000;
-        break;
-    case 1:
-        value = normalValue*1000;
-        break;
-    case 2:
-        value = normalValue*100;
-        break;
-    case 3:
-        value = normalValue*1;
-        break;
-    case 4:
-        value = normalValue*0.001;
-        break;
-    }
-    ui->leLenngth->setText(QString::number(value));
+    ui->leLenngth->setText(QString::number(getValueFromNormalValue(1)));
 }
 
 void MainWindow::on_cbUnitArea_currentIndexChanged(int index)
 {
     ui->statusbar->showMessage(QString::number(index));
-    double value;
-    double normalValue = getRodFromList(ui->sbPropOfRod->value())->getArea();
-    switch (ui->cbUnitArea->currentIndex()) {
-    case 0:
-        value = normalValue*pow(10,12);
-        break;
-    case 1:
-        value = normalValue*1000000;
-        break;
-    case 2:
-        value = normalValue*10000;
-        break;
-    case 3:
-        value = normalValue*1;
-        break;
-    case 4:
-        value = normalValue*0.000001;
-        break;
-    }
-    ui->leArea->setText(QString::number(value));
+    ui->leArea->setText(QString::number(getValueFromNormalValue(2)));
 }
 
 void MainWindow::on_cbModuleE_currentIndexChanged(int index)
 {
     ui->statusbar->showMessage(QString::number(index));
-    double value;
-    double normalValue = getRodFromList(ui->sbPropOfRod->value())->getModuleE();
-    switch (ui->cbModuleE->currentIndex()) {
-    case 0:
-        value  = normalValue;
-        break;
-    case 1:
-        value = normalValue*0.001;
-        break;
-    case 2:
-        value = normalValue*0.000001;
-        break;
-    }
-    ui->leModuleE->setText(QString::number(value));
+    ui->leModuleE->setText(QString::number(getValueFromNormalValue(3)));
 }
 
 void MainWindow::on_cbModuleSigma_currentIndexChanged(int index)
 {
     ui->statusbar->showMessage(QString::number(index));
+    ui->leModuleSigma->setText(QString::number(getValueFromNormalValue(4)));
+}
+
+void MainWindow::on_btnAcceptPropOfRods_clicked()
+{
+    if(ui->sbPropOfRod->isEnabled()){
+        changeEnableRodProp(false);
+        ui->btnAcceptPropOfRods->setText("Поменять характеристики стержней");
+        ui->btnChangeNumberOfRods->setEnabled(false);
+        ui->sbNumberOfrods->setEnabled(false);
+    }else{
+        changeEnableRodProp(true);
+        ui->btnAcceptPropOfRods->setText("Принять характеристики стержней");
+        ui->btnChangeNumberOfRods->setEnabled(true);
+        ui->sbNumberOfrods->setEnabled(true);
+    }
+}
+
+//MyFunc
+
+//type: Длина - 1; площадь - 2; модуль упркгости, сигмы - 3: сигма - 4
+double MainWindow::getValueFromNormalValue(int type)
+{
+    double normalValue;
     double value;
-    double normalValue = getRodFromList(ui->sbPropOfRod->value())->getModuleSigma();
-    switch (ui->cbModuleSigma->currentIndex()) {
-    case 0:
-        value  = normalValue;
-        break;
-    case 1:
-        value = normalValue*0.001;
-        break;
-    case 2:
-        value = normalValue*0.000001;
+    switch (type) {
+    case 1:{
+        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getLength();
+        switch (ui->cbUnitLength->currentIndex()) {
+        case 0:
+            value = normalValue*1000000;
+            break;
+        case 1:
+            value = normalValue*1000;
+            break;
+        case 2:
+            value = normalValue*100;
+            break;
+        case 3:
+            value = normalValue*1;
+            break;
+        case 4:
+            value = normalValue*0.001;
+            break;
+        }
         break;
     }
-    ui->leModuleSigma->setText(QString::number(value));
+    case 2:{
+        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getArea();
+        switch (ui->cbUnitArea->currentIndex()) {
+        case 0:
+            value = normalValue*pow(10,12);
+            break;
+        case 1:
+            value = normalValue*1000000;
+            break;
+        case 2:
+            value = normalValue*10000;
+            break;
+        case 3:
+            value = normalValue*1;
+            break;
+        case 4:
+            value = normalValue*0.000001;
+            break;
+        }
+        break;
+    }
+    case 3:{
+        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getModuleE();
+        switch (ui->cbModuleE->currentIndex()) {
+        case 0:
+            value  = normalValue;
+            break;
+        case 1:
+            value = normalValue*0.001;
+            break;
+        case 2:
+            value = normalValue*0.000001;
+            break;
+        }
+        break;
+    }
+    case 4:{
+        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getModuleSigma();
+        switch (ui->cbModuleSigma->currentIndex()) {
+        case 0:
+            value  = normalValue;
+            break;
+        case 1:
+            value = normalValue*0.001;
+            break;
+        case 2:
+            value = normalValue*0.000001;
+            break;
+        }
+        break;
+    }
+    }
+    return value;
 }
-
-void MainWindow::setNormalValue(int index)
-{
-
-}
-//MyFunc
 
 void MainWindow::changeEnableRodProp(bool en)
 {
@@ -261,6 +297,38 @@ QList <Rod>::iterator MainWindow::getRodFromList(int i)
         }
     }
 }
+
+
+void MainWindow::setSizeOfRod()
+{
+    double corX = 0;
+    double koefLength = 0;
+    double koefArea = 0;
+    double maxLength = 0;
+    double maxArea = 0;
+    double width;
+    double height;
+    for (auto iter = rods.begin(); iter != rods.end(); iter++){
+        if (iter->getLength()>maxLength){
+            maxLength = iter->getLength();
+        }
+        if (iter->getArea()>maxArea){
+            maxArea = iter->getArea();
+        }
+    }
+    koefLength = 200/maxLength;
+    koefArea = 100/maxArea;
+    for (auto iter = rods.begin(); iter != rods.end(); iter++){
+        width = iter->getLength()*koefLength;
+        height = iter->getArea()*koefArea;
+        iter->setWidth(width);
+        iter->setHeight(height);
+        iter->setCorX(corX);
+        corX += width;
+    }
+}
+
+
 
 
 

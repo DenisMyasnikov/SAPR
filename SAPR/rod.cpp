@@ -1,5 +1,45 @@
 #include "rod.h"
 
+double Rod::getCorX() const
+{
+    return corX;
+}
+
+void Rod::setCorX(double value)
+{
+    corX = value;
+}
+
+void Rod::setCorY(double value)
+{
+    corY = value;
+}
+
+double Rod::getCorY() const
+{
+    return corY;
+}
+
+double Rod::getWidth() const
+{
+    return width;
+}
+
+void Rod::setWidth(double value)
+{
+    width = value;
+}
+
+void Rod::setHeight(double value)
+{
+    height = value;
+}
+
+double Rod::getHeight() const
+{
+    return height;
+}
+
 Rod::Rod(int id)
 {
     this->id = id;
@@ -56,6 +96,11 @@ double *Rod::getSizeValue()
 }
 
 Rod::~Rod()
+{
+
+}
+
+void Rod::convertSize()
 {
 
 }
