@@ -21,6 +21,7 @@ SOURCES += \
     listrods.cpp \
     main.cpp \
     mainwindow.cpp \
+    node.cpp \
     qdynamiceditline.cpp \
     rod.cpp \
     verifier.cpp
@@ -29,9 +30,11 @@ HEADERS += \
     constructpainter.h \
     listrods.h \
     mainwindow.h \
+    node.h \
     qdynamiceditline.h \
     rod.h \
-    verifier.h
+    verifier.h \
+    json.hpp
 
 FORMS += \
     mainwindow.ui

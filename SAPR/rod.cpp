@@ -40,6 +40,36 @@ double Rod::getHeight() const
     return height;
 }
 
+void Rod::setLeftProp(bool value)
+{
+    leftProp = value;
+}
+
+bool Rod::getLeftProp() const
+{
+    return leftProp;
+}
+
+bool Rod::getRightProp() const
+{
+    return rightProp;
+}
+
+void Rod::setRightProp(bool value)
+{
+    rightProp = value;
+}
+
+double Rod::getDLoad() const
+{
+    return dLoad;
+}
+
+void Rod::setDLoad(double value)
+{
+    dLoad = value;
+}
+
 Rod::Rod(int id)
 {
     this->id = id;
@@ -100,7 +130,3 @@ Rod::~Rod()
 
 }
 
-void Rod::convertSize()
-{
-
-}

@@ -5,11 +5,14 @@
 #include <iostream>
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QMessageBox>
 
 //MyInclude
 #include "rod.h"
+#include "node.h"
 #include "qdynamiceditline.h"
 #include "constructpainter.h"
+#include <json.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,16 +56,28 @@ private slots:
 
     void on_btnAcceptPropOfRods_clicked();
 
+    void on_cbSetLeftProp_clicked();
+
+    void on_cbSetRightProp_clicked();
+
+    void on_leLoadOnNode_editingFinished();
+
+    void on_leLoadOnRod_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     QList <Rod> rods;
+    QList <Node> nodes;
     QGraphicsScene *myGrScene;
     int previousNumberOfRods=0;
 
+
     double getValueFromNormalValue(int type);
     void setSizeOfRod();
+    void addChangeCountOfNodes(int);
     void changeEnableRodProp(bool en);
+    void changeEnableLoadProp(bool en);
     QList <Rod>::iterator getRodFromList(int i);
-
+    void setCorXOnNodes();
 };
 #endif // MAINWINDOW_H
