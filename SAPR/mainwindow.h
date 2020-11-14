@@ -6,13 +6,19 @@
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QMessageBox>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QFile>
+
 
 //MyInclude
 #include "rod.h"
 #include "node.h"
 #include "qdynamiceditline.h"
 #include "constructpainter.h"
-#include <json.hpp>
+#include "postprocessor.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -64,6 +70,20 @@ private slots:
 
     void on_leLoadOnRod_editingFinished();
 
+    void on_sbLoadOnNode_valueChanged(int arg1);
+
+    void on_sbLoadOnRod_valueChanged(int arg1);
+
+    void on_cbUnitLoadOnNode_currentIndexChanged(int index);
+
+    void on_cbUnitLoadOnRod_currentIndexChanged(int index);
+
+    void on_actioncSave_triggered();
+
+
+
+    void on_actionGo_to_post_triggered();
+
 private:
     Ui::MainWindow *ui;
     QList <Rod> rods;
@@ -77,7 +97,12 @@ private:
     void addChangeCountOfNodes(int);
     void changeEnableRodProp(bool en);
     void changeEnableLoadProp(bool en);
-    QList <Rod>::iterator getRodFromList(int i);
+    void saveJson(QJsonDocument document, QString filename);
+    QList <Rod>::iterator getRodFromList();
+    QList <Rod>::iterator getRodFromList2();
+    QList <Node>::iterator getNodeFromList();
     void setCorXOnNodes();
+
+    PostProcessor *pProc;
 };
 #endif // MAINWINDOW_H

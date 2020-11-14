@@ -1,7 +1,7 @@
 #include "constructpainter.h"
 
 
-void ConstructPainter::paintRod(QGraphicsScene *myGrScene, QList<Rod> rods)
+void ConstructPainter::paintRod(QGraphicsScene *myGrScene, QList<Rod> rods, QList<Node> nodes)
 {
 
     int number = 1;
@@ -14,8 +14,11 @@ void ConstructPainter::paintRod(QGraphicsScene *myGrScene, QList<Rod> rods)
         number++;
         previousHeight = iter->getHeight();
     }
-
     myGrScene->addSimpleText("(" + QString::number(number) + ")",QFont("sds",13))->setPos((rods.last().getCorX()+rods.last().getWidth())-10,previousHeight >= rods.last().getHeight()? -previousHeight-20:rods.last().getHeight()-20);
+
+
+    paintNodeLoad(myGrScene, nodes);
+    paintRodLoad(myGrScene, rods);
     paintProp(myGrScene,  rods);
     myGrScene->setSceneRect(QRect(-30,-100,rods.last().getCorX()+rods.last().getWidth()+50,100));
 }
@@ -34,12 +37,43 @@ void ConstructPainter::paintNodeLoad(QGraphicsScene *myGrScene, QList<Node> node
 {
     QPen pen;
     pen.setWidth(3);
-    auto iterNodes = nodes.begin();
-    myGrScene->addLine(QLineF(iterNodes->getCorX(), 0, iterNodes->getCorX()+20, 0), pen);
-    myGrScene->addLine(QLineF(iterNodes->getCorX()+20, 0, iterNodes->getCorX()+15, 5), pen);
-    myGrScene->addLine(QLineF(iterNodes->getCorX()+20, 0, iterNodes->getCorX()+15, -5), pen);
+    for (auto iter = nodes.begin();iter != nodes.end();iter++){
+        if (iter->getLoad()>0){
+            myGrScene->addLine(QLineF(iter->getCorX(), 0, iter->getCorX()+20, 0), pen);
+            myGrScene->addLine(QLineF(iter->getCorX()+20, 0, iter->getCorX()+15, 5), pen);
+            myGrScene->addLine(QLineF(iter->getCorX()+20, 0, iter->getCorX()+15, -5), pen);
+             myGrScene->addSimpleText(QString::number(iter->getLoad()) + "Н",QFont("sds",10))->setPos(iter->getCorX()+5,-25);
+        }else if (iter->getLoad()<0){
+            myGrScene->addLine(QLineF(iter->getCorX(), 0, iter->getCorX()-20, 0), pen);
+            myGrScene->addLine(QLineF(iter->getCorX()-20, 0, iter->getCorX()-15, 5), pen);
+            myGrScene->addLine(QLineF(iter->getCorX()-20, 0, iter->getCorX()-15, -5), pen);
+            myGrScene->addSimpleText(QString::number(iter->getLoad()) + "Н",QFont("sds",10))->setPos(iter->getCorX()-50,-25);
+        }
+    }
 //    nodes.begin()->getCorX()
 
+}
+
+void ConstructPainter::paintRodLoad(QGraphicsScene *myGrScene, QList<Rod> rods)
+{
+    QPen pen;
+    for (auto iter = rods.begin(); iter != rods.end(); iter++){
+        if (iter->getDLoad()>0){
+            myGrScene->addLine(QLine(iter->getCorX(), 0, iter->getCorX()+iter->getWidth(), 0), pen);
+            for (int l = iter->getCorX()+7; l < iter->getCorX()+iter->getWidth(); l += 10){
+                myGrScene->addLine(QLineF(l, 0, l-3, 5), pen);
+                myGrScene->addLine(QLineF(l, 0, l-3, -5), pen);
+                myGrScene->addSimpleText(QString::number(iter->getDLoad())+ " Н/м",QFont("sds",8))->setPos((iter->getCorX()+iter->getWidth()/2)-6,10);
+            }
+        }else if (iter->getDLoad()<0){
+            myGrScene->addLine(QLine(iter->getCorX(), 0, iter->getCorX()+iter->getWidth(), 0), pen);
+            for (int l = iter->getCorX()+7; l < iter->getCorX()+iter->getWidth(); l += 10){
+                myGrScene->addLine(QLineF(l, 0, l+3, 5), pen);
+                myGrScene->addLine(QLineF(l, 0, l+3, -5), pen);
+                myGrScene->addSimpleText(QString::number(iter->getDLoad())+ " Н/м",QFont("sds",8))->setPos((iter->getCorX()+iter->getWidth()/2)-6,10);
+            }
+        }
+    }
 }
 
 

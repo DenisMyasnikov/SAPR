@@ -22,6 +22,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
+    postprocessor.cpp \
+    processor.cpp \
     qdynamiceditline.cpp \
     rod.cpp \
     verifier.cpp
@@ -31,13 +33,15 @@ HEADERS += \
     listrods.h \
     mainwindow.h \
     node.h \
+    postprocessor.h \
+    processor.h \
     qdynamiceditline.h \
     rod.h \
-    verifier.h \
-    json.hpp
+    verifier.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    postprocessor.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

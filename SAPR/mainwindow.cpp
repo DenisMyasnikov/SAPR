@@ -14,12 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(myGrScene);
     ui->btnAcceptPropOfRods->setEnabled(false);
     ui->btnChangeNumberOfRods->setEnabled(false);
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 // SLOTS
@@ -64,8 +64,7 @@ void MainWindow::on_btnAcceptNumberOfRods_clicked()
     on_sbPropOfRod_valueChanged(1);
     previousNumberOfRods = ui->sbNumberOfrods->value();
     setSizeOfRod();
-    ConstructPainter::paintRod(myGrScene, rods);
-//    ConstructPainter::paintNodeLoad(myGrScene, nodes);
+    ConstructPainter::paintRod(myGrScene, rods, nodes);
 }
 
 void MainWindow::on_btnAcceptPropOfRods_clicked()
@@ -88,7 +87,6 @@ void MainWindow::on_btnAcceptPropOfRods_clicked()
         ui->btnAcceptPropOfRods->setText("Принять характеристики стержней");
         ui->btnChangeNumberOfRods->setEnabled(true);
     }
-    ConstructPainter::paintNodeLoad(myGrScene, nodes);
 }
 
 void MainWindow::on_btnChangeNumberOfRods_clicked()
@@ -108,7 +106,16 @@ void MainWindow::on_sbPropOfRod_valueChanged(int arg1)
     ui->leArea->setText(QString::number(getValueFromNormalValue(2)));
     ui->leModuleE->setText(QString::number(getValueFromNormalValue(3)));
     ui->leModuleSigma->setText(QString::number(getValueFromNormalValue(4)));
-    ConstructPainter::paintRod(myGrScene, rods);
+}
+
+void MainWindow::on_sbLoadOnNode_valueChanged(int arg1)
+{
+    ui->leLoadOnNode->setText(QString::number(getValueFromNormalValue(5)));
+}
+
+void MainWindow::on_sbLoadOnRod_valueChanged(int arg1)
+{
+    ui->leLoadOnRod->setText(QString::number(getValueFromNormalValue(6)));
 }
 
 void MainWindow::on_leLenngth_editingFinished()
@@ -137,10 +144,10 @@ void MainWindow::on_leLenngth_editingFinished()
         normalValue = value*1000;
         break;
     }
-    getRodFromList(ui->sbPropOfRod->value())->setLength(normalValue);
+    getRodFromList()->setLength(normalValue);
     ui->statusbar->showMessage(QString::number(normalValue));
     setSizeOfRod();
-    ConstructPainter::paintRod(myGrScene, rods);
+    ConstructPainter::paintRod(myGrScene, rods, nodes);
 }
 
 void MainWindow::on_leArea_editingFinished()
@@ -169,12 +176,12 @@ void MainWindow::on_leArea_editingFinished()
     case 4:
         normalValue = value*1000000;
         break;
-        ConstructPainter::paintRod(myGrScene, rods);
+        ConstructPainter::paintRod(myGrScene, rods, nodes);
     }
-    getRodFromList(ui->sbPropOfRod->value())->setArea(normalValue);
+    getRodFromList()->setArea(normalValue);
     ui->statusbar->showMessage(QString::number(normalValue));
     setSizeOfRod();
-    ConstructPainter::paintRod(myGrScene, rods);
+    ConstructPainter::paintRod(myGrScene, rods, nodes);
 }
 
 void MainWindow::on_leModuleE_editingFinished()
@@ -198,7 +205,7 @@ void MainWindow::on_leModuleE_editingFinished()
         break;
 
     }
-    getRodFromList(ui->sbPropOfRod->value())->setModuleE(normalValue);
+    getRodFromList()->setModuleE(normalValue);
     ui->statusbar->showMessage(QString::number(normalValue));
 }
 
@@ -223,10 +230,48 @@ void MainWindow::on_leModuleSigma_editingFinished()
         break;
 
     }
-    getRodFromList(ui->sbPropOfRod->value())->setModuleSigma(normalValue);
+    getRodFromList()->setModuleSigma(normalValue);
     ui->statusbar->showMessage(QString::number(normalValue));
 }
 
+void MainWindow::on_leLoadOnNode_editingFinished()
+{
+    double value = ui->leLoadOnNode->text().split(" ")[0].toDouble();
+    double normalValue;
+    switch (ui->cbUnitLoadOnNode->currentIndex()) {
+    case 0:
+        normalValue = value * 0.001;
+        break;
+    case 1:
+        normalValue = value;
+        break;
+    case 2:
+        normalValue = value * 1000;
+        break;
+    }
+    getNodeFromList()->setLoad(normalValue);
+    ConstructPainter::paintRod(myGrScene, rods, nodes);
+}
+
+void MainWindow::on_leLoadOnRod_editingFinished()
+{
+    double value = ui->leLoadOnRod->text().split(" ")[0].toDouble();
+    double normalValue;
+    switch (ui->cbUnitLoadOnRod->currentIndex()) {
+    case 0:
+        normalValue = value * 0.001;
+        break;
+    case 1:
+        normalValue = value;
+        break;
+    case 2:
+        normalValue = value * 1000;
+        break;
+    }
+    getRodFromList2()->setDLoad(normalValue);
+    ConstructPainter::paintRod(myGrScene, rods, nodes);
+
+}
 void MainWindow::on_cbUnitLength_currentIndexChanged(int index)
 {
     ui->statusbar->showMessage(QString::number(index));
@@ -252,7 +297,6 @@ void MainWindow::on_cbModuleSigma_currentIndexChanged(int index)
 }
 
 
-
 void MainWindow::on_cbSetLeftProp_clicked()
 {
     if (!ui->cbSetRightProp->isChecked()){
@@ -260,8 +304,18 @@ void MainWindow::on_cbSetLeftProp_clicked()
         ui->cbSetLeftProp->setChecked(true);
     }else{
         rods.first().setLeftProp(ui->cbSetLeftProp->isChecked());
-        ConstructPainter::paintRod(myGrScene, rods);
+        ConstructPainter::paintRod(myGrScene, rods, nodes);
     }
+}
+
+void MainWindow::on_cbUnitLoadOnNode_currentIndexChanged(int index)
+{
+    ui->leLoadOnNode->setText(QString::number(getValueFromNormalValue(5)));
+}
+
+void MainWindow::on_cbUnitLoadOnRod_currentIndexChanged(int index)
+{
+    ui->leLoadOnRod->setText(QString::number(getValueFromNormalValue(6)));
 }
 
 void MainWindow::on_cbSetRightProp_clicked()
@@ -271,19 +325,18 @@ void MainWindow::on_cbSetRightProp_clicked()
         ui->cbSetRightProp->setChecked(true);
     }else{
         rods.last().setRightProp(ui->cbSetRightProp->isChecked());
-        ConstructPainter::paintRod(myGrScene, rods);
+        ConstructPainter::paintRod(myGrScene, rods,nodes);
     }
 }
 //MyFunc
 
-//type: Длина - 1; площадь - 2; модуль упркгости, сигмы - 3: сигма - 4
+//type: Длина - 1; площадь - 2; модуль упркгости, сигмы - 3; сигма - 4; нагрузка на узел - 5; нагрузка на стержень - 6;
 double MainWindow::getValueFromNormalValue(int type)
 {
-    double normalValue;
     double value;
     switch (type) {
     case 1:{
-        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getLength();
+        double normalValue = getRodFromList()->getLength();
         switch (ui->cbUnitLength->currentIndex()) {
         case 0:
             value = normalValue*1000000;
@@ -304,7 +357,7 @@ double MainWindow::getValueFromNormalValue(int type)
         break;
     }
     case 2:{
-        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getArea();
+        double normalValue = getRodFromList()->getArea();
         switch (ui->cbUnitArea->currentIndex()) {
         case 0:
             value = normalValue*pow(10,12);
@@ -325,7 +378,7 @@ double MainWindow::getValueFromNormalValue(int type)
         break;
     }
     case 3:{
-        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getModuleE();
+        double normalValue = getRodFromList()->getModuleE();
         switch (ui->cbModuleE->currentIndex()) {
         case 0:
             value  = normalValue;
@@ -340,7 +393,7 @@ double MainWindow::getValueFromNormalValue(int type)
         break;
     }
     case 4:{
-        double normalValue = getRodFromList(ui->sbPropOfRod->value())->getModuleSigma();
+        double normalValue = getRodFromList()->getModuleSigma();
         switch (ui->cbModuleSigma->currentIndex()) {
         case 0:
             value  = normalValue;
@@ -350,6 +403,36 @@ double MainWindow::getValueFromNormalValue(int type)
             break;
         case 2:
             value = normalValue*0.000001;
+            break;
+        }
+        break;
+    }
+    case 5:{
+        double normalValue = getNodeFromList()->getLoad();
+        switch (ui->cbUnitLoadOnNode->currentIndex()) {
+        case 0:
+            value = normalValue * 1000;
+            break;
+        case 1:
+            value = normalValue;
+            break;
+        case 2:
+            value = normalValue*0.001;
+            break;
+        }
+        break;
+    }
+    case 6:{
+        double normalValue = getRodFromList2()->getDLoad();
+        switch (ui->cbUnitLoadOnRod->currentIndex()) {
+        case 0:
+            value = normalValue * 1000;
+            break;
+        case 1:
+            value = normalValue;
+            break;
+        case 2:
+            value = normalValue*0.001;
             break;
         }
         break;
@@ -377,6 +460,7 @@ void MainWindow::changeEnableLoadProp(bool en)
     ui->label_9->setEnabled(en);
     ui->label_10->setEnabled(en);
     ui->label_11->setEnabled(en);
+    ui->label_12->setEnabled(en);
     ui->sbLoadOnNode->setEnabled(en);
     ui->sbLoadOnRod->setEnabled(en);
     ui->cbSetLeftProp->setEnabled(en);
@@ -386,7 +470,14 @@ void MainWindow::changeEnableLoadProp(bool en)
     ui->leLoadOnNode->setEnabled(en);
     ui->leLoadOnRod->setEnabled(en);
 }
-QList <Rod>::iterator MainWindow::getRodFromList(int i)
+
+void MainWindow::saveJson(QJsonDocument document, QString name)
+{
+    QFile jsonFile(name);
+    jsonFile.open(QFile::WriteOnly);
+    jsonFile.write(document.toJson());
+}
+QList <Rod>::iterator MainWindow::getRodFromList()
 {
     for(auto iter = rods.begin(); iter != rods.end(); iter++){
         if (iter->getId() == ui->sbPropOfRod->value()){
@@ -395,6 +486,20 @@ QList <Rod>::iterator MainWindow::getRodFromList(int i)
     }
 }
 
+QList <Rod>::iterator MainWindow::getRodFromList2()
+{
+    for(auto iter = rods.begin(); iter != rods.end(); iter++){
+        if (iter->getId() == ui->sbLoadOnRod->value()){
+            return iter;
+        }
+    }
+}
+
+QList <Node>::iterator MainWindow:: getNodeFromList(){
+    for (auto iter = nodes.begin();iter != nodes.end();iter++ )
+        if (iter->getId() == ui->sbLoadOnNode->value())
+            return iter;
+}
 
 void MainWindow::setSizeOfRod()
 {
@@ -429,13 +534,13 @@ void MainWindow::setSizeOfRod()
 void MainWindow:: setCorXOnNodes(){
     for (auto iter = nodes.begin(); iter != nodes.end(); iter++){
         for (auto iter2 = rods.begin(); iter2 != rods.end(); iter2++){
-            iter->setCorX(rods.last().getCorX()+rods.last().getWidth());
             if (iter->getId() == iter2->getId()){
                 iter->setCorX(iter2->getCorX());
             }
         }
-
     }
+    nodes.last().setCorX(rods.last().getCorX()+rods.last().getWidth());
+
 }
 
 void MainWindow::addChangeCountOfNodes(int countOfRods)
@@ -453,12 +558,61 @@ void MainWindow::addChangeCountOfNodes(int countOfRods)
     }
 }
 
-void MainWindow::on_leLoadOnNode_editingFinished()
+
+void MainWindow::on_actioncSave_triggered()
 {
-    nlohmann::json json;
+    if (!rods.isEmpty()){
+        QJsonDocument json;
+        QJsonObject  construct;
+        QJsonObject  countJson;
+        QJsonObject  propOfRodsJson;
+        QJsonObject  loadOnNodeJson;
+        QJsonObject  loadOnRodJson;
+        QJsonObject  propJson;
+
+        countJson.insert("CountOfRods",rods.last().getId());
+        countJson.insert("CountOfNodes", nodes.last().getId());
+
+        for (auto iter = rods.begin(); iter != rods.end(); iter++){
+            QJsonObject  PORJson;
+            PORJson.insert("Length",iter->getLength());
+            PORJson.insert("Area", iter->getArea());
+            PORJson.insert("ModuleE", iter->getModuleE());
+            PORJson.insert("ModuleSigma", iter->getModuleSigma());
+            propOfRodsJson[QString::number(iter->getId())]=PORJson;
+
+            if (iter->getDLoad() != 0)
+                loadOnRodJson.insert(QString::number(iter->getId()),iter->getDLoad());
+
+        }
+
+        for (auto iter = nodes.begin(); iter != nodes.end(); iter++){
+
+                if (iter->getLoad() != 0)
+                    loadOnNodeJson.insert(QString::number(iter->getId()),iter->getLoad());
+        }
+
+        if (rods.first().getLeftProp()){
+            if (rods.last().getRightProp())
+                propJson.insert("RigthProp", true);
+            propJson.insert("LeftProp", true);
+        }else
+            propJson.insert("RigthProp", true);
+
+        construct["Count"] = countJson;
+        construct["PropOfRods"] = propOfRodsJson;
+        construct["loadOnNodes"] = loadOnNodeJson;
+        construct["loadOnRod"] = loadOnRodJson;
+        construct["Props"] = propJson;
+        json.setObject(construct);
+        saveJson(json, "PLCoC.json");
+    }else
+        QMessageBox::warning(this, "Внимание","конструкция не задана");
 }
 
-void MainWindow::on_leLoadOnRod_editingFinished()
+void MainWindow::on_actionGo_to_post_triggered()
 {
-
+    pProc = new PostProcessor();
+    pProc->show();
+    this->close();
 }

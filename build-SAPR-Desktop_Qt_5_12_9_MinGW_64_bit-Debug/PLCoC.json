@@ -1,0 +1,21 @@
+{
+    "Count": {
+        "CountOfNodes": 2,
+        "CountOfRods": 1
+    },
+    "PropOfRods": {
+        "1": {
+            "Area": 0.001,
+            "Length": 1,
+            "ModuleE": 200000000000,
+            "ModuleSigma": 160000000
+        }
+    },
+    "Props": {
+        "LeftProp": true
+    },
+    "loadOnNodes": {
+    },
+    "loadOnRod": {
+    }
+}

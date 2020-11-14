@@ -35,6 +35,8 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actioncSave;
+    QAction *actionGo_to_post;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout;
@@ -99,8 +101,13 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1051, 800);
         MainWindow->setMinimumSize(QSize(800, 600));
+        actioncSave = new QAction(MainWindow);
+        actioncSave->setObjectName(QString::fromUtf8("actioncSave"));
+        actionGo_to_post = new QAction(MainWindow);
+        actionGo_to_post->setObjectName(QString::fromUtf8("actionGo_to_post"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        centralwidget->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -249,6 +256,9 @@ public:
         horizontalLayout_3->addWidget(leLoadOnNode);
 
         cbUnitLoadOnNode = new QComboBox(centralwidget);
+        cbUnitLoadOnNode->addItem(QString());
+        cbUnitLoadOnNode->addItem(QString());
+        cbUnitLoadOnNode->addItem(QString());
         cbUnitLoadOnNode->setObjectName(QString::fromUtf8("cbUnitLoadOnNode"));
         cbUnitLoadOnNode->setFont(font);
 
@@ -287,6 +297,9 @@ public:
         horizontalLayout_5->addWidget(leLoadOnRod);
 
         cbUnitLoadOnRod = new QComboBox(centralwidget);
+        cbUnitLoadOnRod->addItem(QString());
+        cbUnitLoadOnRod->addItem(QString());
+        cbUnitLoadOnRod->addItem(QString());
         cbUnitLoadOnRod->setObjectName(QString::fromUtf8("cbUnitLoadOnRod"));
         cbUnitLoadOnRod->setFont(font);
 
@@ -532,9 +545,13 @@ public:
         menubar->addAction(menu->menuAction());
         menubar->addAction(menu_2->menuAction());
         menubar->addAction(menu_3->menuAction());
+        menu->addAction(actioncSave);
+        menu_3->addAction(actionGo_to_post);
 
         retranslateUi(MainWindow);
 
+        cbUnitLoadOnNode->setCurrentIndex(1);
+        cbUnitLoadOnRod->setCurrentIndex(1);
         cbUnitLength->setCurrentIndex(3);
         cbUnitArea->setCurrentIndex(2);
 
@@ -545,16 +562,29 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        actioncSave->setText(QApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\262 \321\204\320\260\320\271\320\273", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actioncSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionGo_to_post->setText(QApplication::translate("MainWindow", "Go to post", nullptr));
         label->setText(QApplication::translate("MainWindow", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271:", nullptr));
-        btnChangeNumberOfRods->setText(QApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214 \320\272\320\276\320\273\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));
+        btnChangeNumberOfRods->setText(QApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214 \320\272\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));
         btnAcceptNumberOfRods->setText(QApplication::translate("MainWindow", "OK", nullptr));
         label_8->setText(QApplication::translate("MainWindow", "\320\236\320\277\320\276\321\200\321\213", nullptr));
         cbSetLeftProp->setText(QApplication::translate("MainWindow", "L", nullptr));
         cbSetRightProp->setText(QApplication::translate("MainWindow", "R", nullptr));
         label_9->setText(QApplication::translate("MainWindow", "\320\243\320\267\320\265\320\273 -", nullptr));
         label_10->setText(QApplication::translate("MainWindow", "\320\235\320\260\320\263\321\200\321\203\320\267\320\272\320\260 \320\262 \321\203\320\267\320\273\320\265 ", nullptr));
+        cbUnitLoadOnNode->setItemText(0, QApplication::translate("MainWindow", "\320\274\320\235", nullptr));
+        cbUnitLoadOnNode->setItemText(1, QApplication::translate("MainWindow", "\320\235", nullptr));
+        cbUnitLoadOnNode->setItemText(2, QApplication::translate("MainWindow", "\320\272\320\235", nullptr));
+
         label_11->setText(QApplication::translate("MainWindow", "\320\241\321\202\320\265\321\200\320\266\320\265\320\275\321\214-", nullptr));
         label_12->setText(QApplication::translate("MainWindow", "\320\240\320\260\321\201\320\277\321\200\320\265\320\264\320\265\320\273\321\221\320\275\320\275\320\260\321\217 \320\275\320\260\320\263\321\200\321\203\320\267\320\272\320\260 \320\275\320\260 \321\201\321\202\320\265\321\200\320\266\320\265\320\275\321\214 -", nullptr));
+        cbUnitLoadOnRod->setItemText(0, QApplication::translate("MainWindow", "\320\274\320\235/\320\274", nullptr));
+        cbUnitLoadOnRod->setItemText(1, QApplication::translate("MainWindow", "\320\235/\320\274", nullptr));
+        cbUnitLoadOnRod->setItemText(2, QApplication::translate("MainWindow", "\320\272\320\235/\320\274", nullptr));
+
         label_2->setText(QApplication::translate("MainWindow", "\320\245\320\260\321\200\320\260\320\272\321\202\320\265\321\200\320\270\321\201\321\202\320\270\320\272\320\260 \321\201\321\202\320\265\321\200\320\266\320\275\321\217 -", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "\320\224\320\273\320\270\320\275\320\260 - L", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "\320\237\320\273\320\276\321\211\320\260\320\264\321\214 \320\277\320\276\320\277\320\265\321\200\320\265\321\207\320\275\320\276\320\263\320\276 \321\201\320\265\321\207\320\265\320\275\320\270\321\217-A", nullptr));
