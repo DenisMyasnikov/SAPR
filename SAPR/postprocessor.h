@@ -25,6 +25,8 @@ public:
     ~PostProcessor();
 
 private:
+    Processor *proc;
+    QJsonDocument jD;
 
     Ui::PostProcessor *ui;
     QJsonDocument loadJSON(QString fileName);

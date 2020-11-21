@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    delete myGrScene;
     delete ui;
 
 }
@@ -96,6 +97,8 @@ void MainWindow::on_btnChangeNumberOfRods_clicked()
     changeEnableRodProp(false);
     ui->btnAcceptPropOfRods->setEnabled(false);
     ui->btnChangeNumberOfRods->setEnabled(false);
+
+
 }
 
 
@@ -476,6 +479,7 @@ void MainWindow::saveJson(QJsonDocument document, QString name)
     QFile jsonFile(name);
     jsonFile.open(QFile::WriteOnly);
     jsonFile.write(document.toJson());
+    jsonFile.close();
 }
 QList <Rod>::iterator MainWindow::getRodFromList()
 {
@@ -595,9 +599,13 @@ void MainWindow::on_actioncSave_triggered()
         if (rods.first().getLeftProp()){
             if (rods.last().getRightProp())
                 propJson.insert("RigthProp", true);
+            else
+                propJson.insert("RigthProp", false);
             propJson.insert("LeftProp", true);
-        }else
+        }else{
             propJson.insert("RigthProp", true);
+            propJson.insert("LeftProp", false);
+        }
 
         construct["Count"] = countJson;
         construct["PropOfRods"] = propOfRodsJson;
@@ -613,6 +621,9 @@ void MainWindow::on_actioncSave_triggered()
 void MainWindow::on_actionGo_to_post_triggered()
 {
     pProc = new PostProcessor();
+    pProc->setWindowTitle("Постпроцессор");
     pProc->show();
-    this->close();
+
 }
+
+

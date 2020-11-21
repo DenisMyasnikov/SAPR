@@ -813,14 +813,9 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>Препроцкссор</string>
+     <string>Препроцессор</string>
     </property>
     <addaction name="actioncSave"/>
-   </widget>
-   <widget class="QMenu" name="menu_2">
-    <property name="title">
-     <string>Процессор</string>
-    </property>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
@@ -829,7 +824,6 @@
     <addaction name="actionGo_to_post"/>
    </widget>
    <addaction name="menu"/>
-   <addaction name="menu_2"/>
    <addaction name="menu_3"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

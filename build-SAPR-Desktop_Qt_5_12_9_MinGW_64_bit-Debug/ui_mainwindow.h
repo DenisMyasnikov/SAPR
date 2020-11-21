@@ -91,7 +91,6 @@ public:
     QGraphicsView *graphicsView;
     QMenuBar *menubar;
     QMenu *menu;
-    QMenu *menu_2;
     QMenu *menu_3;
     QStatusBar *statusbar;
 
@@ -533,8 +532,6 @@ public:
         menubar->setGeometry(QRect(0, 0, 1051, 20));
         menu = new QMenu(menubar);
         menu->setObjectName(QString::fromUtf8("menu"));
-        menu_2 = new QMenu(menubar);
-        menu_2->setObjectName(QString::fromUtf8("menu_2"));
         menu_3 = new QMenu(menubar);
         menu_3->setObjectName(QString::fromUtf8("menu_3"));
         MainWindow->setMenuBar(menubar);
@@ -543,7 +540,6 @@ public:
         MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menu->menuAction());
-        menubar->addAction(menu_2->menuAction());
         menubar->addAction(menu_3->menuAction());
         menu->addAction(actioncSave);
         menu_3->addAction(actionGo_to_post);
@@ -612,8 +608,7 @@ public:
         cbModuleSigma->setItemText(2, QApplication::translate("MainWindow", "\320\234\320\237\320\220", nullptr));
 
         btnAcceptPropOfRods->setText(QApplication::translate("MainWindow", "\320\237\321\200\320\270\320\275\321\217\321\202\321\214 \321\205\320\260\321\200\320\260\320\272\321\202\320\265\321\200\320\270\321\201\321\202\320\270\320\272\320\270 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));
-        menu->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\265\320\277\321\200\320\276\321\206\320\272\321\201\321\201\320\276\321\200", nullptr));
-        menu_2->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
+        menu->setTitle(QApplication::translate("MainWindow", "\320\237\321\200\320\265\320\277\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
         menu_3->setTitle(QApplication::translate("MainWindow", "\320\237\320\276\321\201\321\202\320\277\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
     } // retranslateUi
 

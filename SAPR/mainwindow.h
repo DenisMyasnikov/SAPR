@@ -91,7 +91,6 @@ private:
     QGraphicsScene *myGrScene;
     int previousNumberOfRods=0;
 
-
     double getValueFromNormalValue(int type);
     void setSizeOfRod();
     void addChangeCountOfNodes(int);
