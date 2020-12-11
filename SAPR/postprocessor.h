@@ -8,6 +8,9 @@
 #include <QFile>
 #include <QString>
 #include <QMessageBox>
+#include <QTableView>
+#include <QTableWidget>
+
 
 //MyIncludes
 #include "processor.h"
@@ -23,6 +26,9 @@ class PostProcessor : public QWidget
 public:
     explicit PostProcessor(QWidget *parent = nullptr);
     ~PostProcessor();
+
+private slots:
+    void on_pBTable_clicked();
 
 private:
     Processor *proc;

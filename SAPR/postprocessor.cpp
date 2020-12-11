@@ -7,9 +7,25 @@ PostProcessor::PostProcessor(QWidget *parent) :
 {
     ui->setupUi(this);
     proc = new Processor(loadJSON("PLCoC.json"));
-    if (proc->getNodes().last().getLoad() != 0)
-        ui->label->setNum(proc->getNodes().last().getLoad());
-    ui->label_2->setNum(proc->getNodes().size());
+    ui->twUx->setRowCount(proc->getCountOfNode());
+
+    for (int i = 0; i<proc->getCountOfNode();i++ ){
+        ui->twUx->setItem(i,0,new QTableWidgetItem(QString::number(proc->getSlauSolution()[i]),INT_MAX));
+    }
+
+    QStringList labels;
+    ui->twNx->setRowCount(10);
+    ui->twNx->setColumnCount(proc->getCountOfRod());
+    for (int i = 0 ; i < ui->twNx->rowCount(); i++){
+//        ui->twNx->setItem(i,0,new QTableWidgetItem(QString::number(proc->getNx(10,1)[i]),INT_MAX));
+    }
+
+    ui->twNx->setHorizontalHeaderLabels(labels);
+
+//    if (proc->getNodes().last().getLoad() != 0)
+//        ui->label->setNum(proc->getNodes().last().getLoad());
+//    ui->label_2->setNum(proc->getNodes().size());
+
 }
 
 PostProcessor::~PostProcessor()
@@ -29,4 +45,9 @@ QJsonDocument PostProcessor::loadJSON(QString fileName)
         return jd;
     }
     file.close();
+}
+
+void PostProcessor::on_pBTable_clicked()
+{
+
 }

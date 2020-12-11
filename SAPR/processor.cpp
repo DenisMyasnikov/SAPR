@@ -38,6 +38,40 @@ bool Processor::getRProp() const
     return rProp;
 }
 
+QVector<double> Processor::getSlauSolution() const
+{
+    return slauSolution;
+}
+
+QVector<double> Processor::getMatrixB() const
+{
+    return matrixB;
+}
+
+QVector<QVector<double> > Processor::getMatrixA() const
+{
+    return matrixA;
+}
+
+QVector<QVector<double> > Processor::getKoefNx() const
+{
+    return koefNx;
+}
+
+QVector<double> Processor::getNx(int n, int rod_id)
+{
+    QVector <double> vecNx;
+    for (auto iter = rods.begin(); iter != rods.end(); iter++){
+        if (iter->getId() == rod_id){
+            int k = iter->getLength()/n;
+            for (int i = 0; i<=iter->getLength()+0.00001; i = i + k){
+                vecNx.push_back(koefNx[rod_id-1][0]*k+koefNx[rod_id-1][1]);
+            }
+        }
+    }
+    return vecNx;
+}
+
 //Функция парсинга
 void Processor::parsJson()
 {
@@ -149,18 +183,16 @@ void Processor::parsJson()
 void Processor::calcFunc()
 {
 //Формирование матрицы А
+    auto iter = rods.begin();
     QVector <double> forMatrixA(countOfRod);
     for (int i = 0; i< forMatrixA.size(); i++){
-        auto iter = rods.begin();
         forMatrixA[i] = (iter->getModuleE()*iter->getArea())/iter->getLength();
-
-
         if(iter != rods.end())
             iter++;
     }
 
 
-    QVector< QVector< double > > matrixA(countOfRod+1);
+    matrixA.resize(countOfRod+1);
 
     for (int i = 0; i < matrixA.size(); i++){
         matrixA[i].resize(countOfRod+1);
@@ -202,19 +234,77 @@ void Processor::calcFunc()
     QVector <double> dLoad(countOfRod);
     int it1 = 0;
     for (auto iter = rods.begin(); iter != rods.end(); iter++){
-        load[it1] = iter->getDLoad();
+        dLoad[it1] = iter->getDLoad()*iter->getLength();
         it1++;
     }
 
 
-    QVector <double> matrixB(countOfNode);
+    matrixB.resize(countOfNode);
     for (int i = 0; i<dLoad.size(); i++ ){
         if (i==0){
             matrixB[0] = load[0]+dLoad[0]/2;
-        }
-        matrixB[i] = load[i]+dLoad[i]/2+dLoad[i-1]/2;
+        }else
+            matrixB[i] = load[i]+dLoad[i]/2+dLoad[i-1]/2;
     }
-    matrixB.last() = dLoad.last()/2+load.last();
+    matrixB.last() = dLoad.last();
+
+    if (rods.first().getLeftProp())
+        matrixB.first() = 0;
+
+    if(rods.last().getRightProp())
+        matrixB.last() = 0;
+
+
+    Matrix mat(matrixA, matrixB);
+    mat.printMatrix(matrixA);
+    std::cout << mat.getDet();
+    for (int i = 1; i < mat.getSolution().size(); i++){
+        if (mat.getSolution()[i] <= 1e-100)
+            slauSolution.push_back(0);
+        else
+            slauSolution.push_back(mat.getSolution()[i]);
+    }
+
+// Находим Nx
+    nx.resize(countOfRod);
+    koefNx.resize(countOfRod);
+    for (auto &n : nx){
+        n.resize(2);
+    }
+
+
+
+     for (auto riter :rods){
+        if (riter.getDLoad() == 0){
+            nx[riter.getId()-1][0] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1]);
+            nx[riter.getId()-1][1] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1]);
+        }else{
+            nx[riter.getId()-1][0] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1])+((riter.getDLoad()*riter.getLength())/2)*(1-0);
+            nx[riter.getId()-1][1] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1]) + ((riter.getDLoad()*riter.getLength())/2)*(1-2*(riter.getLength())/riter.getLength());
+        }
+
+        koefNx[riter.getId()-1].push_back((nx[riter.getId()-1][1]-nx[riter.getId()-1][0])/riter.getLength());
+        koefNx[riter.getId()-1].push_back(nx[riter.getId()-1][0]);
+
+    }
+//     mat.printMatrix(nx);
+//     mat.printMatrix(koefNx);
+
+    for (auto riter :rods)
+        if (riter.getId() == 2)
+//            std:: cout << nx[1][0]/riter.getArea();
+
+    QVector <QVector<double>> ux;
+
+
+
+    QVector <double> vec;
+    for (double i = 0;i <= rods.first().getLength()+0.0001; i += rods.first().getLength()/8){
+        vec.push_back((i*koefNx[0][0]+koefNx[0][1])/rods.first().getArea());
+    }
+
+//    mat.printMatrix(vec);
+//    mat.printMatrix(vec);
 
 }
 

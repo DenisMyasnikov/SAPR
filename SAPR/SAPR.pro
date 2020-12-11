@@ -32,6 +32,7 @@ HEADERS += \
     constructpainter.h \
     listrods.h \
     mainwindow.h \
+    matrix.h \
     node.h \
     postprocessor.h \
     processor.h \

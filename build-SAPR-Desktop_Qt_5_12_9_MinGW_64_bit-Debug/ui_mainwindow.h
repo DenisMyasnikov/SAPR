@@ -259,6 +259,7 @@ public:
         cbUnitLoadOnNode->addItem(QString());
         cbUnitLoadOnNode->addItem(QString());
         cbUnitLoadOnNode->setObjectName(QString::fromUtf8("cbUnitLoadOnNode"));
+        cbUnitLoadOnNode->setMaximumSize(QSize(100, 16777215));
         cbUnitLoadOnNode->setFont(font);
 
         horizontalLayout_3->addWidget(cbUnitLoadOnNode);
@@ -300,6 +301,7 @@ public:
         cbUnitLoadOnRod->addItem(QString());
         cbUnitLoadOnRod->addItem(QString());
         cbUnitLoadOnRod->setObjectName(QString::fromUtf8("cbUnitLoadOnRod"));
+        cbUnitLoadOnRod->setMaximumSize(QSize(100, 16777215));
         cbUnitLoadOnRod->setFont(font);
 
         horizontalLayout_5->addWidget(cbUnitLoadOnRod);
@@ -454,6 +456,7 @@ public:
         cbUnitLength->setObjectName(QString::fromUtf8("cbUnitLength"));
         sizePolicy3.setHeightForWidth(cbUnitLength->sizePolicy().hasHeightForWidth());
         cbUnitLength->setSizePolicy(sizePolicy3);
+        cbUnitLength->setMaximumSize(QSize(100, 16777215));
         cbUnitLength->setFont(font);
 
         verticalLayout_4->addWidget(cbUnitLength);
@@ -467,6 +470,7 @@ public:
         cbUnitArea->setObjectName(QString::fromUtf8("cbUnitArea"));
         sizePolicy3.setHeightForWidth(cbUnitArea->sizePolicy().hasHeightForWidth());
         cbUnitArea->setSizePolicy(sizePolicy3);
+        cbUnitArea->setMaximumSize(QSize(100, 16777215));
         cbUnitArea->setFont(font);
         cbUnitArea->setEditable(false);
         cbUnitArea->setInsertPolicy(QComboBox::NoInsert);
@@ -482,6 +486,7 @@ public:
         cbModuleE->setObjectName(QString::fromUtf8("cbModuleE"));
         sizePolicy3.setHeightForWidth(cbModuleE->sizePolicy().hasHeightForWidth());
         cbModuleE->setSizePolicy(sizePolicy3);
+        cbModuleE->setMaximumSize(QSize(100, 16777215));
         cbModuleE->setFont(font);
 
         verticalLayout_4->addWidget(cbModuleE);
@@ -493,6 +498,7 @@ public:
         cbModuleSigma->setObjectName(QString::fromUtf8("cbModuleSigma"));
         sizePolicy3.setHeightForWidth(cbModuleSigma->sizePolicy().hasHeightForWidth());
         cbModuleSigma->setSizePolicy(sizePolicy3);
+        cbModuleSigma->setMaximumSize(QSize(100, 16777215));
         cbModuleSigma->setFont(font);
 
         verticalLayout_4->addWidget(cbModuleSigma);

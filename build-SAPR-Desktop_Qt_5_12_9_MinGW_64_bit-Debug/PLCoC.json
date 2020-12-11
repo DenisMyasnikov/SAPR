@@ -5,20 +5,20 @@
     },
     "PropOfRods": {
         "1": {
-            "Area": 0.001,
-            "Length": 1,
+            "Area": 0.0016,
+            "Length": 2,
             "ModuleE": 200000000000,
             "ModuleSigma": 160000000
         },
         "2": {
-            "Area": 0.001,
-            "Length": 1,
+            "Area": 0.0032,
+            "Length": 2,
             "ModuleE": 200000000000,
             "ModuleSigma": 160000000
         },
         "3": {
-            "Area": 0.001,
-            "Length": 1,
+            "Area": 0.0048,
+            "Length": 4,
             "ModuleE": 200000000000,
             "ModuleSigma": 160000000
         }
@@ -28,9 +28,11 @@
         "RigthProp": true
     },
     "loadOnNodes": {
-        "1": 12
+        "2": -2,
+        "3": 3
     },
     "loadOnRod": {
-        "1": 12
+        "1": 2,
+        "3": 1
     }
 }

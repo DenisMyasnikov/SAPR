@@ -10,6 +10,9 @@
 #include <rod.h>
 #include <node.h>
 #include <QVector>
+#include <matrix.h>
+#include <vector>]
+#include <iostream>
 
 
 
@@ -29,6 +32,16 @@ public:
 
     bool getRProp() const;
 
+    QVector<double> getSlauSolution() const;
+
+    QVector<double> getMatrixB() const;
+
+    QVector<QVector<double> > getMatrixA() const;
+
+    QVector<QVector<double> > getKoefNx() const;
+
+    QVector<double> getNx(int n, int rod_id);
+
 private:
     QList <Rod> rods;
     QList <Node> nodes;
@@ -36,6 +49,13 @@ private:
     bool rProp = false;
     int countOfRod;
     int countOfNode;
+    QVector <double> slauSolution;
+    QVector <double> matrixB;
+    QVector< QVector< double > > matrixA;
+    QVector< QVector< double > > nx;
+    QVector <QVector<double>> koefNx;
+
+
 //    QVector< QVector< double > > *matrixA;
 
     void parsJson();
