@@ -37,6 +37,7 @@ class Ui_MainWindow
 public:
     QAction *actioncSave;
     QAction *actionGo_to_post;
+    QAction *action;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout;
@@ -104,6 +105,8 @@ public:
         actioncSave->setObjectName(QString::fromUtf8("actioncSave"));
         actionGo_to_post = new QAction(MainWindow);
         actionGo_to_post->setObjectName(QString::fromUtf8("actionGo_to_post"));
+        action = new QAction(MainWindow);
+        action->setObjectName(QString::fromUtf8("action"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setEnabled(true);
@@ -548,6 +551,7 @@ public:
         menubar->addAction(menu->menuAction());
         menubar->addAction(menu_3->menuAction());
         menu->addAction(actioncSave);
+        menu->addAction(action);
         menu_3->addAction(actionGo_to_post);
 
         retranslateUi(MainWindow);
@@ -569,6 +573,7 @@ public:
         actioncSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", nullptr));
 #endif // QT_NO_SHORTCUT
         actionGo_to_post->setText(QApplication::translate("MainWindow", "Go to post", nullptr));
+        action->setText(QApplication::translate("MainWindow", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214 \321\204\320\260\320\271\320\273", nullptr));
         label->setText(QApplication::translate("MainWindow", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271:", nullptr));
         btnChangeNumberOfRods->setText(QApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214 \320\272\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));
         btnAcceptNumberOfRods->setText(QApplication::translate("MainWindow", "OK", nullptr));

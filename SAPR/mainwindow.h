@@ -10,7 +10,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QFile>
-
+#include <QFileDialog>
 
 //MyInclude
 #include "rod.h"
@@ -18,6 +18,7 @@
 #include "qdynamiceditline.h"
 #include "constructpainter.h"
 #include "postprocessor.h"
+#include "processor.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -80,9 +81,10 @@ private slots:
 
     void on_actioncSave_triggered();
 
-
-
     void on_actionGo_to_post_triggered();
+
+    void on_action_triggered();
+
 
 private:
     Ui::MainWindow *ui;
@@ -101,6 +103,7 @@ private:
     QList <Rod>::iterator getRodFromList2();
     QList <Node>::iterator getNodeFromList();
     void setCorXOnNodes();
+    QJsonDocument *loadJSON(QString fileName);
 
     PostProcessor *pProc;
 };

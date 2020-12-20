@@ -72,6 +72,34 @@ QVector<double> Processor::getNx(int n, int rod_id)
     return vecNx;
 }
 
+QVector<QVector<double> > Processor::getUx() const
+{
+    return ux;
+}
+
+QVector<double> Processor::getUxWithsec(Processor proc, int sec, Rod rod, int type)
+{
+     QVector <double> res;
+    switch (type) {
+    case 1:
+        for (double i = 0;i <= rod.getLength()+0.0001; i += rod.getLength()/sec){
+            res.push_back(proc.getUx()[rod.getId()-1][0]+proc.getUx()[rod.getId()-1][1]*i+proc.getUx()[rod.getId()-1][2]*i+proc.getUx()[rod.getId()-1][3]*pow(i,2));
+        }
+        break;
+    case 2:
+        for (double i = 0;i <= rod.getLength()+0.0001; i += rod.getLength()/sec){
+            res.push_back((i*proc.getKoefNx()[rod.getId()-1][0]+proc.getKoefNx()[rod.getId()-1][1]));
+        }
+        break;
+    case 3:
+        for (double i = 0;i <= rod.getLength()+0.0001; i += rod.getLength()/sec){
+            res.push_back((i*proc.getKoefNx()[rod.getId()-1][0]+proc.getKoefNx()[rod.getId()-1][1])/rod.getArea());
+        }
+        break;
+   }
+    return res;
+}
+
 //Функция парсинга
 void Processor::parsJson()
 {
@@ -81,9 +109,10 @@ void Processor::parsJson()
     auto iter = construct.find("Count");
     QJsonValue countJV = iter.value();
     if (countJV.isObject()){
-        auto iter1 = countJV.toObject().find("CountOfNodes");
+        QJsonObject jo = countJV.toObject();
+        auto iter1 = jo.find("CountOfNodes");
         countOfNode = iter1.value().toInt();
-        auto iter2 = countJV.toObject().find("CountOfRods");
+        auto iter2 = jo.find("CountOfRods");
         countOfRod = iter2.value().toInt();
     }
 
@@ -246,7 +275,7 @@ void Processor::calcFunc()
         }else
             matrixB[i] = load[i]+dLoad[i]/2+dLoad[i-1]/2;
     }
-    matrixB.last() = dLoad.last();
+    matrixB.last() = dLoad.last()/2;
 
     if (rods.first().getLeftProp())
         matrixB.first() = 0;
@@ -285,27 +314,42 @@ void Processor::calcFunc()
 
         koefNx[riter.getId()-1].push_back((nx[riter.getId()-1][1]-nx[riter.getId()-1][0])/riter.getLength());
         koefNx[riter.getId()-1].push_back(nx[riter.getId()-1][0]);
-
     }
 //     mat.printMatrix(nx);
 //     mat.printMatrix(koefNx);
 
-    for (auto riter :rods)
-        if (riter.getId() == 2)
-//            std:: cout << nx[1][0]/riter.getArea();
-
-    QVector <QVector<double>> ux;
 
 
 
-    QVector <double> vec;
-    for (double i = 0;i <= rods.first().getLength()+0.0001; i += rods.first().getLength()/8){
-        vec.push_back((i*koefNx[0][0]+koefNx[0][1])/rods.first().getArea());
+
+
+// Находим ux
+    ux.resize(countOfRod);
+
+    for (auto &n : ux){
+        n.resize(4);
+    }
+    QVector <double> dload1;
+    for (auto riter :rods){
+       if (riter.getDLoad() == 0){
+           ux[riter.getId()-1][0] = slauSolution[riter.getId()-1];
+           ux[riter.getId()-1][1] = (slauSolution[riter.getId()] - slauSolution[riter.getId()-1])/riter.getLength();
+           ux[riter.getId()-1][2] = 0;
+           ux[riter.getId()-1][3] = 0;
+       }else{
+           ux[riter.getId()-1][0] = slauSolution[riter.getId()-1];
+           ux[riter.getId()-1][1] = (slauSolution[riter.getId()] - slauSolution[riter.getId()-1])/riter.getLength();
+           ux[riter.getId()-1][2] = riter.getDLoad()*riter.getLength()/(2*riter.getModuleE()*riter.getArea());
+           ux[riter.getId()-1][3] = -riter.getDLoad()/(2*riter.getModuleE()*riter.getArea());
+       }
+        dload1.push_back(riter.getModuleE());
     }
 
-//    mat.printMatrix(vec);
-//    mat.printMatrix(vec);
 
+
+
+//mat.printMatrix(slauSolution);
+//mat.printMatrix(matrixB);
 }
 
 

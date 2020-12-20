@@ -22,7 +22,7 @@ public:
         m_replys = replyMatrix;
     };
 
-    void printMatrix(const matrix &printMatrix)
+    static void printMatrix(const matrix &printMatrix)
     {
         for (const auto &row : printMatrix)
         {
@@ -36,7 +36,7 @@ public:
         std::cout << "Matrix size is - " << printMatrix.size() << std::endl;
     }
 
-    void printMatrix(QVector <double> v){
+    static void printMatrix(QVector <double> v){
         for (auto &row: v){
             std::cout << row << " ";
         }

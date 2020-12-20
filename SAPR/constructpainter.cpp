@@ -76,4 +76,105 @@ void ConstructPainter::paintRodLoad(QGraphicsScene *myGrScene, QList<Rod> rods)
     }
 }
 
+void ConstructPainter::paintLineForIpur(QGraphicsScene *myGrScene, QList<Rod> rods, QList<Node> nodes, Processor proc,int type)
+{
+    QPen pen;
+    QPen pen1;
+    int def=200;
+    pen.setStyle(Qt::DashLine);
+    for (auto iter = nodes.begin(); iter != nodes.end(); iter++){
+        myGrScene->addLine(QLineF(iter->getCorX(), 0, iter->getCorX(), 600 ), pen);
+    }
+    myGrScene->addLine(QLineF(nodes.first().getCorX(), def, nodes.last().getCorX(),def),pen1);
+    paintIpur(myGrScene,proc,rods,def, type);
+}
+
+void ConstructPainter::paintIpur(QGraphicsScene *myGrScene, Processor proc, QList<Rod> rods,  int def, int type)
+{
+    QVector <double> allRes;
+    QVector <QVector<double>> eachRodRes;
+
+    eachRodRes.resize(rods.size());
+    for (auto riter = rods.begin(); riter != rods.end(); riter++){
+        allRes.append(Processor::getUxWithsec(proc,riter->getCorX()+riter->getWidth(),*riter,type));
+        eachRodRes[riter->getId()-1].append(Processor::getUxWithsec(proc,riter->getCorX()+riter->getWidth(),*riter,type));
+    }
+    std::cout <<std::endl << std::endl  <<*std::max_element(allRes.begin(),allRes.end());
+    double max = 0;
+    for (int i = 0; i < allRes.size();i++)
+        if (abs(allRes[i])>max)
+            max = abs(allRes[i]);
+
+    double koef = 100/max;
+    Matrix::printMatrix(allRes);
+    bool exist = false;
+    for (int i= 0; i < allRes.size(); i++)
+        if (allRes[i] != 0)
+            exist = true;
+     if (exist){
+    for (auto riter = rods.begin(); riter != rods.end(); riter++){
+        for (int i = riter->getCorX(); i <= riter->getCorX()+riter->getWidth(); i++){
+            double y = def -eachRodRes[riter->getId()-1][i]*koef;
+            if (i%5==0)
+                myGrScene->addLine(QLineF(i, def, i, y));
+            else
+                myGrScene->addLine(QLineF(i, y, i, y));
+        }
+        if (type != 1)
+            myGrScene->addText(QString::number(eachRodRes[riter->getId()-1].first()),QFont("sds",8))->setPos(riter->getCorX()-30, def - eachRodRes[riter->getId()-1].first()*koef-10);
+        else
+           myGrScene->addText(QString::number(eachRodRes.first().first()),QFont("sds",8))->setPos(0, def - eachRodRes.first().first()*koef-10);
+        myGrScene->addText(QString::number(eachRodRes[riter->getId()-1].last()),QFont("sds",8))->setPos(riter->getCorX()+riter->getWidth(),def - eachRodRes[riter->getId()-1].last()*koef-10);
+    }
+    }
+
+}
+
+//void ConstructPainter::paintGraph(QGraphicsScene *myGrScene, Processor proc, QList<Rod> rods, int def, int type)
+//{
+//    QPen pen;
+//    QPen pen2;
+//    pen2.setWidth(3);
+//    pen.setWidth(5);
+//    myGrScene->addLine(-20,200,-20,-200,pen);
+//    myGrScene->addLine(-30,190,600,190,pen);
+
+//    QVector <double> allRes;
+
+
+
+//    for (auto riter = rods.begin(); riter != rods.end(); riter++){
+//        if (riter->getId() == def){
+//            allRes.append(Processor::getUxWithsec(proc,400,*riter,1));
+//    }
+
+//    double max = 0;
+//    for (int i = 0; i < allRes.size();i++)
+//        if (abs(allRes[i])>max)
+//            max = abs(allRes[i]);
+
+//    double koef = 300/max;
+//    Matrix::printMatrix(allRes);
+//    bool exist = false;
+//    for (int i= 0; i < allRes.size(); i++)
+//        if (allRes[i] != 0)
+//            exist = true;
+//    if (exist){
+//        for (auto riter = rods.begin(); riter != rods.end(); riter++){
+//            if (riter->getId()==def){
+//                for (int i = riter->getCorX(); i < 400; i++){
+//                    double y = 300 -allRes[i]*koef;
+//                    double nextY =300 -allRes[i+1]*koef;
+//                    myGrScene->addLine(QLineF(i, y, i+1, nextY),pen2);
+//                }
+//            }
+//        }
+//    }
+//    }
+//}
+
+
+
+
+
 

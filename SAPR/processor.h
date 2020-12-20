@@ -11,7 +11,7 @@
 #include <node.h>
 #include <QVector>
 #include <matrix.h>
-#include <vector>]
+#include <vector>
 #include <iostream>
 
 
@@ -19,6 +19,7 @@
 class Processor
 {
 public:
+
     Processor(QJsonDocument jsonD);
 
     int getCountOfRod() const;
@@ -42,6 +43,10 @@ public:
 
     QVector<double> getNx(int n, int rod_id);
 
+    QVector<QVector<double> > getUx() const;
+
+    static QVector <double> getUxWithsec(Processor proc, int sec, Rod rod, int type);
+
 private:
     QList <Rod> rods;
     QList <Node> nodes;
@@ -54,6 +59,7 @@ private:
     QVector< QVector< double > > matrixA;
     QVector< QVector< double > > nx;
     QVector <QVector<double>> koefNx;
+    QVector <QVector<double>> ux;
 
 
 //    QVector< QVector< double > > *matrixA;

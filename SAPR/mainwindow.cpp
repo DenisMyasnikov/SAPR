@@ -63,7 +63,7 @@ void MainWindow::on_btnAcceptNumberOfRods_clicked()
 
     addChangeCountOfNodes(rods.size());
     on_sbPropOfRod_valueChanged(1);
-    previousNumberOfRods = ui->sbNumberOfrods->value();
+    previousNumberOfRods = rods.last().getId();
     setSizeOfRod();
     ConstructPainter::paintRod(myGrScene, rods, nodes);
 }
@@ -522,8 +522,8 @@ void MainWindow::setSizeOfRod()
             maxArea = iter->getArea();
         }
     }
-    koefLength = 200/maxLength;
-    koefArea = 100/maxArea;
+    koefLength = 250/maxLength;
+    koefArea = 125/maxArea;
     for (auto iter = rods.begin(); iter != rods.end(); iter++){
         width = iter->getLength()*koefLength;
         height = iter->getArea()*koefArea;
@@ -544,7 +544,6 @@ void MainWindow:: setCorXOnNodes(){
         }
     }
     nodes.last().setCorX(rods.last().getCorX()+rods.last().getWidth());
-
 }
 
 void MainWindow::addChangeCountOfNodes(int countOfRods)
@@ -623,7 +622,36 @@ void MainWindow::on_actionGo_to_post_triggered()
     pProc = new PostProcessor();
     pProc->setWindowTitle("Постпроцессор");
     pProc->show();
+}
 
+void MainWindow::on_action_triggered()
+{
+    QJsonDocument *jd = loadJSON(QFileDialog::getOpenFileName());
+    if (jd != nullptr){
+        Processor proc(*jd);
+        rods = proc.getRods();
+        nodes = proc.getNodes();
+        setSizeOfRod();
+        ConstructPainter::paintRod(myGrScene, rods, nodes);
+        ui->sbNumberOfrods->setValue(rods.last().getId());
+        ui->sbPropOfRod->setRange(1, rods.last().getId());
+        previousNumberOfRods = rods.last().getId();
+     }
+}
+
+QJsonDocument * MainWindow::loadJSON(QString fileName)
+{
+    QFile file(fileName);
+    file.open(QFile::ReadOnly);
+    QJsonDocument *jd;
+    if (file.isOpen()){
+         jd = new QJsonDocument(QJsonDocument().fromJson(file.readAll()));
+
+    }else{
+        jd = nullptr;
+    }
+    file.close();
+    return jd;
 }
 
 

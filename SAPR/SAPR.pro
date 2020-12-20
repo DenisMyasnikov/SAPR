@@ -18,27 +18,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     constructpainter.cpp \
-    listrods.cpp \
     main.cpp \
     mainwindow.cpp \
     node.cpp \
     postprocessor.cpp \
     processor.cpp \
     qdynamiceditline.cpp \
-    rod.cpp \
-    verifier.cpp
+    rod.cpp
 
 HEADERS += \
     constructpainter.h \
-    listrods.h \
     mainwindow.h \
     matrix.h \
     node.h \
     postprocessor.h \
     processor.h \
     qdynamiceditline.h \
-    rod.h \
-    verifier.h
+    rod.h
 
 FORMS += \
     mainwindow.ui \
@@ -48,3 +44,5 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+OTHER_FILES
