@@ -62,7 +62,7 @@ void PostProcessor::setNxTable(int n, QList<Rod> rods, QVector <QVector<double>>
     for (auto iter = rods.begin(); iter != rods.end(); iter++){
         labels.push_back("Стержень: "+ QString::number(iter->getId()));
         int c=0;
-        for (double i = 0;i <= iter->getLength()+0.0001; i += iter->getLength()/n){
+        for (double i = 0;i <= iter->getLength()+0.0000001; i += iter->getLength()/n){
             double res = (i*koefNx[iter->getId()-1][0]+koefNx[iter->getId()-1][1]);
             ui->twNx->setItem(c,iter->getId()-1,new QTableWidgetItem(QString::number (res),INT_MAX));
             c++;

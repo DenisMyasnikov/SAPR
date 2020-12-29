@@ -1,0 +1,38 @@
+{
+    "Count": {
+        "CountOfNodes": 4,
+        "CountOfRods": 3
+    },
+    "PropOfRods": {
+        "1": {
+            "Area": 0.0016,
+            "Length": 2,
+            "ModuleE": 200000000000,
+            "ModuleSigma": 160000000
+        },
+        "2": {
+            "Area": 0.0032,
+            "Length": 2,
+            "ModuleE": 200000000000,
+            "ModuleSigma": 160000000
+        },
+        "3": {
+            "Area": 0.0048,
+            "Length": 4,
+            "ModuleE": 200000000000,
+            "ModuleSigma": 160000000
+        }
+    },
+    "Props": {
+        "LeftProp": true,
+        "RigthProp": true
+    },
+    "loadOnNodes": {
+        "2": -2,
+        "3": 3
+    },
+    "loadOnRod": {
+        "1": 2,
+        "3": 1
+    }
+}

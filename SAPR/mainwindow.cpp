@@ -254,6 +254,7 @@ void MainWindow::on_leLoadOnNode_editingFinished()
     }
     getNodeFromList()->setLoad(normalValue);
     ConstructPainter::paintRod(myGrScene, rods, nodes);
+    ui->statusbar->showMessage(QString::number(normalValue));
 }
 
 void MainWindow::on_leLoadOnRod_editingFinished()
@@ -273,29 +274,27 @@ void MainWindow::on_leLoadOnRod_editingFinished()
     }
     getRodFromList2()->setDLoad(normalValue);
     ConstructPainter::paintRod(myGrScene, rods, nodes);
+    ui->statusbar->showMessage(QString::number(normalValue));
 
 }
 void MainWindow::on_cbUnitLength_currentIndexChanged(int index)
 {
-    ui->statusbar->showMessage(QString::number(index));
+
     ui->leLenngth->setText(QString::number(getValueFromNormalValue(1)));
 }
 
 void MainWindow::on_cbUnitArea_currentIndexChanged(int index)
 {
-    ui->statusbar->showMessage(QString::number(index));
     ui->leArea->setText(QString::number(getValueFromNormalValue(2)));
 }
 
 void MainWindow::on_cbModuleE_currentIndexChanged(int index)
 {
-    ui->statusbar->showMessage(QString::number(index));
     ui->leModuleE->setText(QString::number(getValueFromNormalValue(3)));
 }
 
 void MainWindow::on_cbModuleSigma_currentIndexChanged(int index)
 {
-    ui->statusbar->showMessage(QString::number(index));
     ui->leModuleSigma->setText(QString::number(getValueFromNormalValue(4)));
 }
 
@@ -632,10 +631,19 @@ void MainWindow::on_action_triggered()
         rods = proc.getRods();
         nodes = proc.getNodes();
         setSizeOfRod();
+        if (rods.first().getLeftProp())
+            ui->cbSetLeftProp->setChecked(true);
+        else
+            ui->cbSetLeftProp->setChecked(false);
+        if (rods.last().getRightProp())
+            ui->cbSetRightProp->setChecked(true);
+        else
+            ui->cbSetRightProp->setChecked(false);
+
         ConstructPainter::paintRod(myGrScene, rods, nodes);
         ui->sbNumberOfrods->setValue(rods.last().getId());
         ui->sbPropOfRod->setRange(1, rods.last().getId());
-        previousNumberOfRods = rods.last().getId();
+        previousNumberOfRods = rods.last().getId();       
      }
 }
 

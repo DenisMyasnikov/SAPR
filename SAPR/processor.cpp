@@ -211,6 +211,16 @@ void Processor::parsJson()
 
 void Processor::calcFunc()
 {
+//    using namespace Eigen;
+//    Eigen::Matrix3f A;
+//    Eigen::Vector3f b;
+//    A << 1,2,3,  4,5,6,  7,8,10;
+//    b << 3, 3, 4;
+//    std::cout << "Here is the matrix A:\n" << A << std::endl;
+//    std::cout << "Here is the vector b:\n" << b << std::endl;
+//    Eigen::Vector3f x = A.colPivHouseholderQr().solve(b);
+//    std::cout << "The solution is:\n" << x << std::endl;
+
 //Формирование матрицы А
     auto iter = rods.begin();
     QVector <double> forMatrixA(countOfRod);
@@ -225,13 +235,12 @@ void Processor::calcFunc()
 
     for (int i = 0; i < matrixA.size(); i++){
         matrixA[i].resize(countOfRod+1);
+        for (int j=0; j<matrixA.size(); j++)
+            matrixA[i][j] = 0;
     }
 
-    matrixA[0][0] = forMatrixA[0];
-    matrixA[1][0] = -forMatrixA[0];
-    matrixA[0][1] = -forMatrixA[0];
-
     matrixA.last().last() = forMatrixA.last();
+    matrixA.first().first() = forMatrixA.first();
 
     for (int i = 1; i < matrixA.size()-1; i++){
         matrixA[i][i]=forMatrixA[i-1]+forMatrixA[i];
@@ -267,15 +276,21 @@ void Processor::calcFunc()
         it1++;
     }
 
-
     matrixB.resize(countOfNode);
+
+    for (int i = 0; i < matrixB.size(); i++){
+        matrixB[i] = 0;
+    }
+
+
+
     for (int i = 0; i<dLoad.size(); i++ ){
         if (i==0){
             matrixB[0] = load[0]+dLoad[0]/2;
         }else
             matrixB[i] = load[i]+dLoad[i]/2+dLoad[i-1]/2;
     }
-    matrixB.last() = dLoad.last()/2;
+    matrixB.last() = dLoad.last()/2+load.last();
 
     if (rods.first().getLeftProp())
         matrixB.first() = 0;
@@ -284,15 +299,30 @@ void Processor::calcFunc()
         matrixB.last() = 0;
 
 
-    Matrix mat(matrixA, matrixB);
-    mat.printMatrix(matrixA);
-    std::cout << mat.getDet();
-    for (int i = 1; i < mat.getSolution().size(); i++){
-        if (mat.getSolution()[i] <= 1e-100)
+    bool need = false;
+    for (int i = 0; i< matrixB.size(); i++ )
+        if (matrixB[i] != 0)
+            need = true;
+    if(need){
+        Matrix mat(matrixA, matrixB);
+
+        std::cout << mat.getDet();
+        for (int i = 1; i < mat.getSolution().size(); i++){
+
+            if (abs(mat.getSolution()[i]) <= 1e-100)
+                slauSolution.push_back(0);
+            else
+                slauSolution.push_back(mat.getSolution()[i]);
+
+        }
+    }else{
+        for(int i = 0; i < nodes.last().getId(); i++)
             slauSolution.push_back(0);
-        else
-            slauSolution.push_back(mat.getSolution()[i]);
     }
+
+
+
+
 
 // Находим Nx
     nx.resize(countOfRod);
@@ -306,17 +336,17 @@ void Processor::calcFunc()
      for (auto riter :rods){
         if (riter.getDLoad() == 0){
             nx[riter.getId()-1][0] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1]);
-            nx[riter.getId()-1][1] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1]);
+            nx[riter.getId()-1][1] = 0;
         }else{
-            nx[riter.getId()-1][0] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1])+((riter.getDLoad()*riter.getLength())/2)*(1-0);
-            nx[riter.getId()-1][1] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1]) + ((riter.getDLoad()*riter.getLength())/2)*(1-2*(riter.getLength())/riter.getLength());
+            nx[riter.getId()-1][0] = forMatrixA[riter.getId()-1]*(slauSolution[riter.getId()] - slauSolution[riter.getId()-1])+riter.getDLoad()*riter.getLength()/2;
+            nx[riter.getId()-1][1] = -((riter.getDLoad()*riter.getLength())/2)*(2/riter.getLength());
         }
 
-        koefNx[riter.getId()-1].push_back((nx[riter.getId()-1][1]-nx[riter.getId()-1][0])/riter.getLength());
+        koefNx[riter.getId()-1].push_back(nx[riter.getId()-1][1]);
         koefNx[riter.getId()-1].push_back(nx[riter.getId()-1][0]);
     }
-//     mat.printMatrix(nx);
-//     mat.printMatrix(koefNx);
+
+
 
 
 
@@ -346,10 +376,6 @@ void Processor::calcFunc()
     }
 
 
-
-
-//mat.printMatrix(slauSolution);
-//mat.printMatrix(matrixB);
 }
 
 

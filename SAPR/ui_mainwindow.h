@@ -572,7 +572,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         actioncSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", nullptr));
 #endif // QT_NO_SHORTCUT
-        actionGo_to_post->setText(QApplication::translate("MainWindow", "Go to post", nullptr));
+        actionGo_to_post->setText(QApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270 \320\262 \320\277\320\276\321\201\321\202\320\277\321\200\320\276\321\206\320\265\321\201\321\201\320\276\321\200", nullptr));
         action->setText(QApplication::translate("MainWindow", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214 \321\204\320\260\320\271\320\273", nullptr));
         label->setText(QApplication::translate("MainWindow", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271:", nullptr));
         btnChangeNumberOfRods->setText(QApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214 \320\272\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \321\201\321\202\320\265\321\200\320\266\320\275\320\265\320\271", nullptr));

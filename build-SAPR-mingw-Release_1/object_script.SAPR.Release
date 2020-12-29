@@ -1,0 +1,11 @@
+release/constructpainter.o
+release/main.o
+release/mainwindow.o
+release/node.o
+release/postprocessor.o
+release/processor.o
+release/qdynamiceditline.o
+release/rod.o
+release/moc_mainwindow.o
+release/moc_postprocessor.o
+release/moc_qdynamiceditline.o

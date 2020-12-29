@@ -6,6 +6,8 @@
 #include <QJsonObject>
 #include <QFile>
 #include <QMatrix>
+//#include <Eigen/Dense>
+
 //MyIncludes
 #include <rod.h>
 #include <node.h>
@@ -13,7 +15,6 @@
 #include <matrix.h>
 #include <vector>
 #include <iostream>
-
 
 
 class Processor

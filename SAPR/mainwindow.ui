@@ -874,7 +874,7 @@
   </action>
   <action name="actionGo_to_post">
    <property name="text">
-    <string>Go to post</string>
+    <string>Перейти в постпроцессор</string>
    </property>
   </action>
   <action name="action">

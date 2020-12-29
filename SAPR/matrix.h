@@ -16,10 +16,11 @@ public:
 
     typedef QVector <QVector<double>> matrix;
 
-    Matrix (matrix &matrix, QVector<double> &replyMatrix)
+    Matrix (matrix &matrix, QVector<double> replyMatrix)
     {
         m_matrix = matrix;
         m_replys = replyMatrix;
+        printMatrix(m_replys);
     };
 
     static void printMatrix(const matrix &printMatrix)
@@ -67,10 +68,13 @@ public:
         {
             return determines;
         }
-
+        QVector<double> m_replys_cover = m_replys;
         for (int i = 0; i < m_matrix.size(); i++)
         {
-
+            if (m_replys_cover != m_replys){
+                m_replys = m_replys_cover;
+            }
+            QVector<double> m_replys_cover;
             int j = 0;
 
             matrix repMatrix;
@@ -80,7 +84,6 @@ public:
                 row[i] = m_replys[j++];
                 repMatrix.push_back(row);
             }
-            printMatrix(repMatrix);
             determines.push_back(devideMatrix(repMatrix));
         }
 
@@ -88,6 +91,7 @@ public:
         {
             determines[i] /= determines[0];
         }
+
         return determines;
     }
 
